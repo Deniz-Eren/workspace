@@ -19,11 +19,11 @@ directory path before proceeding:
 The *.jenkins* is where the Jenkins files can persists and the *Release* is
 where the released build packages will be copied.
 
-Modify the symbolic link _ci/jenkins/.project_repo_ to point to your
-project local repository root path, so that Jenkins can access the current
-uncommitted changes of your local repository. The default symbolic link just
-points to the default workspace project. Then to make sure Git ignores the
-changes you have made to _.project_repo_ symbolic link:
+Modify the symbolic link _ci/jenkins/.project_repo_ to point to your project
+local repository root path, so that Jenkins can access the current uncommitted
+changes of your local repository. The default symbolic link just points to the
+default workspace project. Then to make sure Git ignores the changes you have
+made to _.project_repo_ symbolic link:
 
     git update-index --assume-unchanged .project_repo
 
