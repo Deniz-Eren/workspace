@@ -1,7 +1,6 @@
-#!/bin/bash
-#
-# \file     build-cppzmq.sh
-# \brief    Bash script that builds and installs cppzmq library.
+##
+# \file     CMakeBuildTypeHelper.cmake
+# \brief    Build type helper CMake module file
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
@@ -19,30 +18,18 @@
 # this program. If not, see <https://www.gnu.org/licenses/>.
 #
 
-. ~/workspace/dev/ubuntu-qnx710/packages/builder-args.sh "$@"
-
-if [ $? -ne 0 ]
-then
-    exit $?
-fi
-
-git clone https://github.com/zeromq/cppzmq.git
-cd cppzmq
-git checkout tags/v$PACKAGE_VERSION -b v$PACKAGE_VERSION-branch
-
-mkdir build ; cd build
-cmake \
-    -DCMAKE_TOOLCHAIN_FILE=/root/workspace/cmake/Toolchain/qnx710-x86_64.toolchain.cmake \
-    -DCMAKE_PREFIX_PATH=$PREFIX \
-    -DCMAKE_INSTALL_PREFIX=$PREFIX \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
-    -DBUILD_TESTS=OFF \
-    -DCMAKE_CXX_FLAGS="-lsocket" \
-    ..
-
-make install
-
-cd ../..
-
-rm -rf cppzmq
+if( CMAKE_BUILD_TYPE MATCHES Coverage )
+    add_compile_definitions( DEBUG_BUILD=1 )
+    add_compile_definitions( COVERAGE_BUILD=1 )
+    set( BUILD_TYPE_NAME "-cov" )
+elseif( CMAKE_BUILD_TYPE MATCHES Profiling )
+    add_compile_definitions( DEBUG_BUILD=1 )
+    add_compile_definitions( PROFILING_BUILD=1 )
+    set( BUILD_TYPE_NAME "-pro" )
+elseif( CMAKE_BUILD_TYPE MATCHES Debug )
+    add_compile_definitions( DEBUG_BUILD=1 )
+    set( BUILD_TYPE_NAME "-g" )
+elseif( CMAKE_BUILD_TYPE MATCHES Release )
+    add_compile_definitions( RELEASE_BUILD=1 )
+    set( BUILD_TYPE_NAME "" )
+endif()

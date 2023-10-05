@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 #
-# \file     build-cppzmq.sh
-# \brief    Bash script that builds and installs cppzmq library.
+# \file     post_startup.sh
+# \brief    Bash script included in the image filesystem (IFS) that runs during
+#           boot up of the QNX OS test image.
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
@@ -19,30 +20,16 @@
 # this program. If not, see <https://www.gnu.org/licenses/>.
 #
 
-. ~/workspace/dev/ubuntu-qnx710/packages/builder-args.sh "$@"
+# Configure locations of PAM files.  Note, pamconf must end with a slash
+setconf pamlib /system/pam/lib
+setconf pamconf /system/pam/config/
 
-if [ $? -ne 0 ]
-then
-    exit $?
+if [ ! -e /pps/slogger2 ]; then
+    mkdir /pps/slogger2
 fi
 
-git clone https://github.com/zeromq/cppzmq.git
-cd cppzmq
-git checkout tags/v$PACKAGE_VERSION -b v$PACKAGE_VERSION-branch
+pinger &
 
-mkdir build ; cd build
-cmake \
-    -DCMAKE_TOOLCHAIN_FILE=/root/workspace/cmake/Toolchain/qnx710-x86_64.toolchain.cmake \
-    -DCMAKE_PREFIX_PATH=$PREFIX \
-    -DCMAKE_INSTALL_PREFIX=$PREFIX \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
-    -DBUILD_TESTS=OFF \
-    -DCMAKE_CXX_FLAGS="-lsocket" \
-    ..
+echo Process count:`pidin arg | wc -l`
 
-make install
-
-cd ../..
-
-rm -rf cppzmq
+exit 0

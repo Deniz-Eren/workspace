@@ -19,7 +19,7 @@
 # this program. If not, see <https://www.gnu.org/licenses/>.
 #
 
-. ~/dev-qnx/dev/scripts/builder-args.sh "$@"
+. ~/workspace/dev/ubuntu-qnx710/packages/builder-args.sh "$@"
 
 if [ $? -ne 0 ]
 then
@@ -33,7 +33,7 @@ cd eigen-$PACKAGE_VERSION
 
 mkdir build ; cd build
 cmake \
-    -DCMAKE_TOOLCHAIN_FILE=/root/dev-qnx/cmake/Toolchain/qnx710-x86_64.toolchain.cmake \
+    -DCMAKE_TOOLCHAIN_FILE=/root/workspace/cmake/Toolchain/qnx710-x86_64.toolchain.cmake \
     -DCMAKE_PREFIX_PATH=$PREFIX \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_BUILD_TYPE=Release \

@@ -117,9 +117,9 @@ function( code_coverage_run exec_target_name )
                 "${CMAKE_CXX_COMPILER_ID}" MATCHES "(QNX)?QCC|qcc" )
 
             add_custom_target( ${exec_target_name}-cov-run ALL
-                COMMAND ${CMAKE_CURRENT_BINARY_DIR}/${exec_target_name}.sh
+                COMMAND ${CMAKE_CURRENT_BINARY_DIR}/ssh-${exec_target_name}.sh
                         || (exit 0)
-                DEPENDS ${exec_target_name} )
+                DEPENDS ssh-${exec_target_name} )
 
         elseif( CMAKE_COMPILER_IS_GNUCXX )
             add_custom_target( ${exec_target_name}-cov-run ALL

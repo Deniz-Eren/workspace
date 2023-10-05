@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# \file     setup-dev-env.sh
-# \brief    Bash script for setup of dev container.
+# \file     setup-qnx710-qemu.sh
+# \brief    Bash script for setup of QNX image run within QEmu container.
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
@@ -20,29 +20,42 @@
 #
 
 # default dev-env Dockerfile is ubuntu-stable
-optd=/opt/workspace/dev/ubuntu-stable/Dockerfile
+optd=/opt/workspace/emulation/qnx710/Dockerfile
 
-while getopts d: opt; do
+while getopts d:i: opt; do
     case ${opt} in
     d )
         optd=$OPTARG
         ;;
+    i )
+        opti=$OPTARG
+        ;;
     \?)
         echo "Usage: $(basename $0) [options]"
-        echo "  -d Dockerfile to use for dev-env container"
+        echo "  -d Dockerfile to use for qemu-env container"
+        echo "  -i path name of the image file to use"
         echo ""
         exit
         ;;
     esac
 done
 
+if [[ -z "${opti}" ]]; then
+    echo "error - location to store image hasn't been specified."
+    exit -1
+fi
+
 docker build \
     -f $optd \
-    -t localhost/workspace-dev .
+    -t localhost/dev-qemu .
 
-docker run -d --name=dev-env \
-    --network host \
-    localhost/workspace-dev tail -f /dev/null
+docker exec --user root --workdir /root dev-env bash -c \
+    "source .profile \
+    && /root/workspace/dev/.setup-profile.sh \
+    && cd /root/workspace/emulation/qnx710/image \
+    && ./builddisk.sh"
 
-# Make a copy of the workspace Git repository to dev-env container
-docker cp /opt/workspace dev-env:/root/
+rm -rf $opti
+
+docker cp dev-env:/root/workspace/emulation/qnx710/image/output $opti
+

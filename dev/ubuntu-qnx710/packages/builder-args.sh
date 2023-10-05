@@ -20,7 +20,7 @@
 #
 
 if [ -z "$QNX_HOST" ]; then
-    echo "Cannot find QNX toolchain, ensure to run within dev-qnx/dev"
+    echo "Cannot find QNX toolchain, ensure to run within workspace/dev"
          "environment container"
 
     exit -1

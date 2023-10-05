@@ -1,7 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 #
-# \file     build-cppzmq.sh
-# \brief    Bash script that builds and installs cppzmq library.
+# \file     mount_fs.sh
+# \brief    Bash script included in the image filesystem (IFS) that runs during
+#           boot up of the QNX OS test image.
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
@@ -19,30 +20,15 @@
 # this program. If not, see <https://www.gnu.org/licenses/>.
 #
 
-. ~/workspace/dev/ubuntu-qnx710/packages/builder-args.sh "$@"
+echo "---> Mounting file systems"
 
-if [ $? -ne 0 ]
-then
-    exit $?
+if [ -e /data -a -e /system ]; then
+    exit 0
 fi
 
-git clone https://github.com/zeromq/cppzmq.git
-cd cppzmq
-git checkout tags/v$PACKAGE_VERSION -b v$PACKAGE_VERSION-branch
+mount -t qnx6 -o sync=optional,mntperms=755 /dev/hd0t178 /system
+mount -t qnx6 -o sync=optional,mntperms=755 /dev/hd0t179 /data
+mount -t qnx6 /dev/hd0t177 /boot
 
-mkdir build ; cd build
-cmake \
-    -DCMAKE_TOOLCHAIN_FILE=/root/workspace/cmake/Toolchain/qnx710-x86_64.toolchain.cmake \
-    -DCMAKE_PREFIX_PATH=$PREFIX \
-    -DCMAKE_INSTALL_PREFIX=$PREFIX \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
-    -DBUILD_TESTS=OFF \
-    -DCMAKE_CXX_FLAGS="-lsocket" \
-    ..
-
-make install
-
-cd ../..
-
-rm -rf cppzmq
+ln -sPf /data/var/tmp /tmp
+/system/xbin/cleanup_tmp

@@ -19,7 +19,7 @@
 # this program. If not, see <https://www.gnu.org/licenses/>.
 #
 
-. ~/dev-qnx/dev/scripts/builder-args.sh "$@"
+. ~/workspace/dev/ubuntu-qnx710/packages/builder-args.sh "$@"
 
 if [ $? -ne 0 ]
 then
