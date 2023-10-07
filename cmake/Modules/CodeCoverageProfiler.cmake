@@ -1,6 +1,7 @@
 ##
-# \file     CMakeCoverageHelper.cmake
-# \brief    CMake code coverage helper module file
+# \file     CodeCoverageProfiler.cmake
+# \brief    CMake module file for code coverage, profiling and static analysis
+#           toolchains.
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
@@ -17,6 +18,104 @@
 # You should have received a copy of the GNU General Public License along with
 # this program. If not, see <https://www.gnu.org/licenses/>.
 #
+
+option( DISABLE_COVERAGE_HTML_GEN
+        "Disable clang-tidy static analysis checks" OFF )
+
+if( "${CMAKE_C_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang" OR
+    "${CMAKE_CXX_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang" )
+
+    option( DISABLE_CLANG_TIDY "Disable clang-tidy static analysis checks" OFF )
+
+    option( ENABLE_CLANG_ADDRESS_SANITIZER
+        "Enable clang AddressSanitizer checks" OFF )
+
+    option( ENABLE_CLANG_THREAD_SANITIZER
+        "Enable clang ThreadSanitizer checks" OFF )
+
+endif()
+
+option( ENABLE_VALGRIND_MEMCHECK
+    "Enable Valgrind profiling with memcheck tool" OFF )
+
+option( ENABLE_VALGRIND_HELGRIND
+    "Enable Valgrind profiling with helgrind tool" OFF )
+
+option( ENABLE_VALGRIND_DRD
+    "Enable Valgrind profiling with drd tool" OFF )
+
+if( CMAKE_BUILD_TYPE MATCHES Coverage )
+    add_compile_definitions( DEBUG_BUILD=1 )
+    add_compile_definitions( COVERAGE_BUILD=1 )
+    set( BUILD_TYPE_NAME "-cov" )
+elseif( CMAKE_BUILD_TYPE MATCHES Profiling )
+    add_compile_definitions( DEBUG_BUILD=1 )
+    add_compile_definitions( PROFILING_BUILD=1 )
+    set( BUILD_TYPE_NAME "-pro" )
+elseif( CMAKE_BUILD_TYPE MATCHES Debug )
+    add_compile_definitions( DEBUG_BUILD=1 )
+    set( BUILD_TYPE_NAME "-g" )
+elseif( CMAKE_BUILD_TYPE MATCHES Release )
+    add_compile_definitions( RELEASE_BUILD=1 )
+    set( BUILD_TYPE_NAME "" )
+endif()
+
+if( "${CMAKE_C_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang" OR
+    "${CMAKE_CXX_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang" )
+
+    if( NOT DISABLE_CLANG_TIDY )
+        find_program( TIDY_FOUND clang-tidy )
+
+        if( NOT TIDY_FOUND )
+            message( FATAL_ERROR "clang-tidy not found!" )
+        endif()
+
+        string( CONCAT TIDY_CHECKS
+            "-checks=*,"
+                # Specifying the unwanted checks
+                "-cppcoreguidelines-pro-bounds-array-to-pointer-decay,"
+                "-cppcoreguidelines-pro-type-union-access,"
+                "-cppcoreguidelines-pro-type-vararg,"
+                "-fuchsia-default-arguments,"
+                "-google-readability-todo,"
+                "-google-runtime-references,"
+                "-hicpp-no-array-decay,"
+                "-hicpp-vararg,"
+                "-llvm-include-order,"
+                "-llvmlibc-implementation-in-namespace,"
+                "-llvmlibc-restrict-system-libc-headers,"
+                "-readability-braces-around-statements,"
+                "-readability-avoid-const-params-in-decls;" )
+
+        set( CMAKE_CXX_CLANG_TIDY
+            clang-tidy; -header-filter=src/*pp; ${TIDY_CHECKS} )
+    endif()
+
+    if( ENABLE_CLANG_ADDRESS_SANITIZER )
+        set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
+            -fsanitize=address -fno-omit-frame-pointer" )
+
+        set( LDFLAGS "${LDFLAGS} -fsanitize=address" )
+    endif()
+
+    if( ENABLE_CLANG_THREAD_SANITIZER )
+        set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=thread" )
+
+        set( LDFLAGS "${LDFLAGS} -fsanitize=thread" )
+    endif()
+endif()
+
+if( ENABLE_VALGRIND_MEMCHECK OR
+    ENABLE_VALGRIND_HELGRIND OR
+    ENABLE_VALGRIND_DRD )
+
+    find_program( Valgrind_FOUND valgrind )
+
+    if( NOT Valgrind_FOUND )
+        message( FATAL_ERROR "valgrind not found!" )
+    endif()
+endif()
+
 
 function( code_coverage_flags )
     if( CMAKE_BUILD_TYPE MATCHES Coverage )
@@ -186,3 +285,31 @@ function( code_coverage_gen_html all_cov_runs )
         endif()
     endif()
 endfunction( code_coverage_gen_html )
+
+
+function( code_profiling_flags )
+    if( CMAKE_BUILD_TYPE MATCHES Profiling )
+        if( "${CMAKE_C_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang" OR
+            "${CMAKE_CXX_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang" )
+
+            # Currently not handled or needed
+
+        elseif( "${CMAKE_C_COMPILER_ID}" MATCHES "(QNX)?QCC|qcc" OR
+                "${CMAKE_CXX_COMPILER_ID}" MATCHES "(QNX)?QCC|qcc" )
+
+            set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -finstrument-functions -O0 -g"
+                PARENT_SCOPE )
+
+            set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
+                -finstrument-functions -O0 -g"
+                PARENT_SCOPE )
+
+        elseif( CMAKE_COMPILER_IS_GNUCXX )
+
+            # Currently not handled or needed
+
+        else()
+            message( FATAL_ERROR "Code profiling requires Clang or GCC!" )
+        endif()
+    endif()
+endfunction( code_profiling_flags )

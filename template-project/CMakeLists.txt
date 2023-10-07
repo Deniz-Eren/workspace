@@ -44,10 +44,9 @@ project( template-project
          VERSION ${PROGRAM_VERSION}
          LANGUAGES C CXX )
 
-option( DISABLE_COVERAGE_HTML_GEN
-        "Disable clang-tidy static analysis checks" OFF )
-
 set( SSH_PORT "6022" CACHE STRING "SSH port number" )
+
+include( CodeCoverageProfiler )
 
 # Compiler settings
 set( CMAKE_CXX_STANDARD 17 )
@@ -101,9 +100,6 @@ install( TARGETS ${CMAKE_PROJECT_NAME}
     DESTINATION bin/
     COMPONENT bin )
 
-include( CMakeCoverageHelper )
-include( CMakeProfilingHelper )
-include( CMakeBuildTypeHelper )
 include( CTest )
 
 code_coverage_flags()
