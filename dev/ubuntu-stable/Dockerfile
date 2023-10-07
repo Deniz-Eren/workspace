@@ -62,7 +62,8 @@ RUN export TZ=Australia/Sydney \
         doxygen \
         pkg-config \
     && apt-get autoremove -y \
-    && apt-get autoclean -y
+    && apt-get autoclean -y \
+    && pip3 install clang-html==1.3.8
 
 ENV NVIDIA_DRIVER_CAPABILITIES all
 
