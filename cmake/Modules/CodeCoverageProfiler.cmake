@@ -313,3 +313,33 @@ function( code_profiling_flags )
         endif()
     endif()
 endfunction( code_profiling_flags )
+
+
+function( valgrind_profiling_run exec_target_name )
+    if( ENABLE_VALGRIND_MEMCHECK )
+        add_custom_target( ${exec_target_name}-valgrind-memcheck-run ALL
+            COMMAND valgrind --tool=memcheck
+                    --xml=yes --xml-file=valgrind-${exec_target_name}-memcheck.xml
+                    ${CMAKE_CURRENT_BINARY_DIR}/${exec_target_name}
+                    || (exit 0)
+            DEPENDS ${exec_target_name} )
+    endif()
+
+    if( ENABLE_VALGRIND_HELGRIND )
+        add_custom_target( ${exec_target_name}-valgrind-helgrind-run ALL
+            COMMAND valgrind --tool=helgrind
+                    --xml=yes --xml-file=valgrind-${exec_target_name}-helgrind.xml
+                    ${CMAKE_CURRENT_BINARY_DIR}/${exec_target_name}
+                    || (exit 0)
+            DEPENDS ${exec_target_name} )
+    endif()
+
+    if( ENABLE_VALGRIND_DRD )
+        add_custom_target( ${exec_target_name}-valgrind-drd-run ALL
+            COMMAND valgrind --tool=drd
+                    --xml=yes --xml-file=valgrind-${exec_target_name}-drd.xml
+                    ${CMAKE_CURRENT_BINARY_DIR}/${exec_target_name}
+                    || (exit 0)
+            DEPENDS ${exec_target_name} )
+    endif()
+endfunction( valgrind_profiling_run )
