@@ -12,7 +12,7 @@ For details about the various toolchain setup sections check the following:
 See ["Development Environment"](dev/) ; a containerized setup is presented
 based on the Ubuntu host operating system.
 
-See ["QNX 7.1 QEmu Emulation"](emulation/qnx710); Virtual Machine with hardware
+See ["QNX Emulation"](emulation/qnx710); QEmu Virtual Machine with hardware
 emulation support such as CAN-bus, together with target integration to QNX
 Momentics IDE.
 
