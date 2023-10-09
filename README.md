@@ -16,7 +16,7 @@ See ["QNX Emulation"](emulation/qnx710); QEmu Virtual Machine with hardware
 emulation support such as CAN-bus, together with target integration to QNX
 Momentics IDE.
 
-See ["Jenkins CI"](ci/jenkins/); a quick, easy-to-setup Jenkins environment,
+See ["Local Jenkins in Docker Compose Setup"](ci/jenkins/); a quick, easy-to-setup Jenkins environment,
 intended to be run on the developer's local computer to monitor progress; i.e.
 view test results, code coverage, etc, is presented here.
 
