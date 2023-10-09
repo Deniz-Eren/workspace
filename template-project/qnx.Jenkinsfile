@@ -53,6 +53,8 @@ node('jenkins-agent') {
                 $projectpath/workspace/ci/scripts/setup-dev-env.sh \
                     -d $projectpath/workspace/dev/.Dockerfile
 
+                mkdir -p /home/jenkins/Images
+
                 $projectpath/workspace/ci/scripts/setup-qnx710-qemu.sh \
                     -d $projectpath/workspace/emulation/qnx710/Dockerfile \
                     -i /home/jenkins/Images/disk-raw
