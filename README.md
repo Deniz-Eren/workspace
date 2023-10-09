@@ -9,7 +9,7 @@ instructions specified in [Template Project](template-project/) folder.
 
 For details about the various toolchain setup sections check the following:
 
-See ["QNX Development Environment"](dev/); a containerized setup is presented
+See ["Development Environment"](dev/) ; a containerized setup is presented
 based on the Ubuntu host operating system.
 
 See ["QNX 7.1 QEmu Emulation"](emulation/qnx710); Virtual Machine with hardware
