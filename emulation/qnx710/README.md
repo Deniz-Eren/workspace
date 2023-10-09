@@ -1,4 +1,4 @@
-# Emulation
+# QNX Emulation
 
 Before you can start the emulation, you must make sure you have built the
 QNXTEST QNX image; see section [Test Platform](./image/). The emulator VM boots
