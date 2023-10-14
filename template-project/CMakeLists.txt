@@ -21,9 +21,11 @@
 cmake_minimum_required( VERSION 3.22 )
 
 # Set the toolchain file to QNX 7.1
-if( DEFINED ENV{QNX_HOST} )
-    set( CMAKE_TOOLCHAIN_FILE
-        ${CMAKE_SOURCE_DIR}/workspace/cmake/Toolchain/qnx710-x86_64.toolchain.cmake )
+if( NOT DEFINED CMAKE_TOOLCHAIN_FILE )
+    if( DEFINED ENV{QNX_HOST} )
+        set( CMAKE_TOOLCHAIN_FILE
+            ${CMAKE_SOURCE_DIR}/workspace/cmake/Toolchain/qnx710-x86_64.toolchain.cmake )
+    endif()
 endif()
 
 project( template-project )
