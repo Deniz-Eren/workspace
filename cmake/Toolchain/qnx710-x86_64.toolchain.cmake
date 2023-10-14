@@ -19,18 +19,18 @@
 
 # the name of the target operating system
 set( CMAKE_SYSTEM_NAME qnx710 )
-set( arch gcc_ntox86_64 )
+set( arch x86_64 )
 
 # Set toolchain prefix to find the correct tools
 set( _CMAKE_TOOLCHAIN_PREFIX    $ENV{QNX_HOST}/usr/bin/ntox86_64- )
 
 # which compilers to use for C and C++
 set( CMAKE_C_COMPILER           $ENV{QNX_HOST}/usr/bin/qcc )
-set( CMAKE_C_COMPILER_TARGET    ${arch} )
+set( CMAKE_C_COMPILER_TARGET    gcc_nto${arch} )
 set( CMAKE_CXX_COMPILER         $ENV{QNX_HOST}/usr/bin/ntox86_64-c++ )
 # TODO: investigate why setting q++ doesn't work:
 #set( CMAKE_CXX_COMPILER         $ENV{QNX_HOST}/usr/bin/q++ )
-set( CMAKE_CXX_COMPILER_TARGET  ${arch} )
+set( CMAKE_CXX_COMPILER_TARGET  gcc_nto${arch} )
 
 # Set some known tools
 set( CMAKE_NM       $ENV{QNX_HOST}/usr/bin/ntox86_64-nm )
