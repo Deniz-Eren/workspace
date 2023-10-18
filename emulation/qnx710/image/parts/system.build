@@ -39,6 +39,7 @@ etc/profile = {
 export TERM=qansi
 export PATH=/opt/bin:/proc/boot:/system/xbin
 export LD_LIBRARY_PATH=/opt/lib:/proc/boot:/system/lib:/system/lib/dll
+export PCI_CAP_MODULE_DIR=/proc/boot/lib/dll/pci/
 export SYSNAME=QNXTEST
 export TZ=AEST-10
 export PS1=\[$SYSNAME]\#
@@ -281,6 +282,7 @@ xbin/dhclient-script=sbin/dhclient-script
 #!/bin/sh
 export PATH=/opt/bin:/proc/boot:/system/xbin
 export LD_LIBRARY_PATH=/opt/lib:/proc/boot:/system/lib:/system/lib/dll
+export PCI_CAP_MODULE_DIR=/proc/boot/lib/dll/pci/
 exec /system/xbin/dhclient-script
 }
 
