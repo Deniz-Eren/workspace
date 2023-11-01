@@ -59,7 +59,7 @@
     LD_LIBRARY_PATH=/opt/lib:/proc/boot:/system/lib:/system/lib/dll
     PCI_BKWD_COMPAT_MODULE=/proc/boot/pci_bkwd_compat.so
     PCI_SLOG_MODULE=pci_slog2.so
-    PCI_CAP_MODULE_DIR=/proc/boot
+    PCI_CAP_MODULE_DIR=/proc/boot/lib/dll/pci/
     procmgr_symlink /system/xbin/login /bin/login
     #50.builtin
     setconf TIMEZONE UTC0
