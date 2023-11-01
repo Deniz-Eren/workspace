@@ -1,5 +1,5 @@
-# \file     qnx710-armle-v7.toolchain.cmake
-# \brief    CMake QNX 7.1 cross-compile toolchain for armle-v7 platform.
+# \file     qnx710-armv7le.toolchain.cmake
+# \brief    CMake QNX 7.1 cross-compile toolchain for armv7le platform.
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
