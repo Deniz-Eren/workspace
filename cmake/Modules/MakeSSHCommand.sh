@@ -34,7 +34,7 @@ while getopts d:e:o:p:r:s: opt; do
         CMAKE_SOURCE_DIR=$OPTARG
         ;;
     e )
-        ENV_VARS=$OPTARG
+        ENV_VARS_FILE=$OPTARG
         ;;
     o )
         SCRIPT_OUTPUT_PATH=$OPTARG
@@ -77,6 +77,8 @@ FILE_DST_PATH=$FILE_SRC_PATH
 FILENAME=`basename $FILE_SRC_PATH`
 DIRNAME=`dirname $FILE_SRC_PATH`
 
+ENV_FILENAME=`basename $ENV_VARS_FILE`
+
 cat << END > $SCRIPT_OUTPUT_PATH
 sshpass -p 'root' ssh \\
         -o 'StrictHostKeyChecking=no' \\
@@ -89,17 +91,33 @@ sshpass -p 'root' scp \\
         -o 'StrictHostKeyChecking=no' \\
         -o 'UserKnownHostsFile=/dev/null' \\
         -o 'LogLevel=ERROR' \\
-        -r -P$SSH_PORT $FILE_SRC_PATH \\
+        -r -P$SSH_PORT $ENV_VARS_FILE $FILE_SRC_PATH \\
         root@localhost:$DIRNAME/
 
 PROGRAM_ARGS=\$@
 
+END
+if [ -z "$ENV_VARS_FILE" ]
+then
+cat << END >> $SCRIPT_OUTPUT_PATH
 sshpass -p 'root' ssh \\
         -o 'StrictHostKeyChecking=no' \\
         -o 'UserKnownHostsFile=/dev/null' \\
         -o 'LogLevel=ERROR' \\
         -p$SSH_PORT root@localhost \\
-        "$ENV_VARS $FILE_DST_PATH \$PROGRAM_ARGS"
+        "$FILE_DST_PATH \$PROGRAM_ARGS"
+END
+else
+cat << END >> $SCRIPT_OUTPUT_PATH
+sshpass -p 'root' ssh \\
+        -o 'StrictHostKeyChecking=no' \\
+        -o 'UserKnownHostsFile=/dev/null' \\
+        -o 'LogLevel=ERROR' \\
+        -p$SSH_PORT root@localhost \\
+        ". $DIRNAME/$ENV_FILENAME ; $FILE_DST_PATH \$PROGRAM_ARGS"
+END
+fi
+cat << END >> $SCRIPT_OUTPUT_PATH
 
 EXITCODE=\$?
 
