@@ -87,3 +87,11 @@ To install cppzmq version 4.9.0:
 
     ./ubuntu-qnx710/packages/build-cppzmq.sh -v 4.9.0 -p ~/.local
 
+To install openssl version 3.2.0:
+
+    ./ubuntu-qnx710/packages/build-openssl.sh -v 3.2.0 -p ~/.local
+
+To install libssh2 version 1.11.0:
+
+    ./ubuntu-qnx710/packages/build-libssh2.sh -v 1.11.0 -p ~/.local
+
