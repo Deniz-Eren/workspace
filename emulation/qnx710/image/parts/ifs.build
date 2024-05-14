@@ -182,29 +182,29 @@ PCI_HW_MODULE=pci_hw-Intel_x86.so
 
 
 lib/dll/pci/pci_hw-Intel_x86.so
-lib/dll/pci/pci_hw-Intel_x86.so.2.4
-lib/dll/pci/pci_hw-Intel_x86.so.2.4.sym
+lib/dll/pci/pci_hw-Intel_x86.so.3.0
+lib/dll/pci/pci_hw-Intel_x86.so.3.0.sym
 lib/dll/pci/pci_slog2.so
-lib/dll/pci/pci_slog2.so.2.1
-lib/dll/pci/pci_slog2.so.2.1.sym
+lib/dll/pci/pci_slog2.so.3.0
+lib/dll/pci/pci_slog2.so.3.0.sym
 lib/dll/pci/pci_cap-0x05.so=lib/dll/pci/pci_cap-0x05.so
-lib/dll/pci/pci_cap-0x05.so.2.3=lib/dll/pci/pci_cap-0x05.so.2.3
-lib/dll/pci/pci_cap-0x05.so.2.3.sym=lib/dll/pci/pci_cap-0x05.so.2.3.sym
+lib/dll/pci/pci_cap-0x05.so.2.3=lib/dll/pci/pci_cap-0x05.so.3.0
+lib/dll/pci/pci_cap-0x05.so.2.3.sym=lib/dll/pci/pci_cap-0x05.so.3.0.sym
 lib/dll/pci/pci_cap-0x10.so=lib/dll/pci/pci_cap-0x10.so
-lib/dll/pci/pci_cap-0x10.so.2.3=lib/dll/pci/pci_cap-0x10.so.2.3
-lib/dll/pci/pci_cap-0x10.so.2.3.sym=lib/dll/pci/pci_cap-0x10.so.2.3.sym
+lib/dll/pci/pci_cap-0x10.so.2.3=lib/dll/pci/pci_cap-0x10.so.3.0
+lib/dll/pci/pci_cap-0x10.so.2.3.sym=lib/dll/pci/pci_cap-0x10.so.3.0.sym
 lib/dll/pci/pci_cap-0x11.so=lib/dll/pci/pci_cap-0x11.so
-lib/dll/pci/pci_cap-0x11.so.2.2=lib/dll/pci/pci_cap-0x11.so.2.2
-lib/dll/pci/pci_cap-0x11.so.2.2.sym=lib/dll/pci/pci_cap-0x11.so.2.2.sym
+lib/dll/pci/pci_cap-0x11.so.2.2=lib/dll/pci/pci_cap-0x11.so.3.0
+lib/dll/pci/pci_cap-0x11.so.2.2.sym=lib/dll/pci/pci_cap-0x11.so.3.0.sym
 lib/dll/pci/pci_strings.so
-lib/dll/pci/pci_strings.so.2.0
-lib/dll/pci/pci_strings.so.2.0.sym
+lib/dll/pci/pci_strings.so.3.0
+lib/dll/pci/pci_strings.so.3.0.sym
 lib/dll/pci/pci_bkwd_compat.so
-lib/dll/pci/pci_bkwd_compat.so.2.1
-lib/dll/pci/pci_bkwd_compat.so.2.1.sym
+lib/dll/pci/pci_bkwd_compat.so.3.0
+lib/dll/pci/pci_bkwd_compat.so.3.0.sym
 lib/dll/pci/pci_debug2.so
-lib/dll/pci/pci_debug2.so.2.1
-lib/dll/pci/pci_debug2.so.2.1.sym
+lib/dll/pci/pci_debug2.so.3.0
+lib/dll/pci/pci_debug2.so.3.0.sym
 sbin/pci-server
 
 
