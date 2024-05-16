@@ -43,3 +43,5 @@ You should see:
                     ssvid: 13fe  ?
                     ssid:  00d7
 
+To test PCI MSI-X capability using hyperthetical device demo0x11 edit
+docker-compose.yml file and change pcm26d2ca_pci to demo0x11_pci.
