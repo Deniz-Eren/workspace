@@ -12,9 +12,8 @@ For details about the various toolchain setup sections check the following:
 See ["Development Environment"](dev/) ; a containerized setup is presented
 based on the Ubuntu host operating system.
 
-See ["QNX Emulation"](emulation/qnx710); QEmu Virtual Machine with hardware
-emulation support such as CAN-bus, together with target integration to QNX
-Momentics IDE.
+See ["Emulation"](emulation); QEmu Virtual Machine with hardware emulation
+support such as CAN-bus, together with target integration to QNX Momentics IDE.
 
 See ["Local Jenkins in Docker Compose Setup"](ci/jenkins/); a quick,
 easy-to-setup Jenkins environment, intended to be run on the developer's local

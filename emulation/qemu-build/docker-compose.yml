@@ -1,7 +1,7 @@
 #
 # \file     docker-compose.yml
-# \brief    Docker-compose script that describes the containerised test
-#           environments of the QNX OS test setup.
+# \brief    Docker Compose script that describes the container needed to
+#           run the development environment.
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
@@ -20,12 +20,12 @@
 #
 
 services:
-  qemu:
-    hostname: qemu-test
-    container_name: qemu-test
+  term:
+    hostname: emulation-dev
+    container_name: qemu-build
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./qemu/tests/docker/dockerfiles/ubuntu2204.docker
     network_mode: host
     stdin_open: true
     tty: true
@@ -33,21 +33,24 @@ services:
     cap_add:
       - NET_ADMIN
     devices:
+      - "/dev/dri:/dev/dri"
       - "/dev/kvm:/dev/kvm"
     volumes:
       - ~/.ssh:/root/.ssh
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ~/.Xauthority:/root/.Xauthority
       - /etc/localtime:/etc/localtime:ro
-      - ./image/output:/root/Images
+      - ~:/root/userhome
+      - ./qemu:/root/qemu
+      - ../qnx710/image/output:/root/Images
     environment:
       - LANG=en_US.UTF-8
       - LC_ALL=en_US.utf8
       - DISPLAY=${DISPLAY}
       - NO_AT_BRIDGE=1
     command: >
-      sh -c "echo &&
-             if [ ! -d /sys/class/net/vcan0 ]; then \
+      sh -c "echo starting qemu build environment... \
+             && if [ ! -d /sys/class/net/vcan0 ]; then \
                  echo \"Setting up VCAN0...\" &&
                  ip link add dev vcan0 type vcan &&
                  ip link set up vcan0; \
@@ -62,8 +65,12 @@ services:
                  ip link add dev vcan2 type vcan &&
                  ip link set up vcan2; \
              else echo \"VCAN2 already setup\"; fi &&
-             qemu-system-x86_64 --version &&
-             qemu-system-x86_64 \
+             cd /root/qemu &&
+             ./configure &&
+             cd build &&
+             ninja &&
+             ./qemu-system-x86_64 --version &&
+             ./qemu-system-x86_64 \
                 -k en-us \
                 -drive id=disk,file=/root/Images/disk-raw,format=raw,if=none \
                 -device ahci,id=ahci \
@@ -72,7 +79,7 @@ services:
                 -object can-bus,id=canbus0 \
                 -object can-bus,id=canbus1 \
                 -object can-bus,id=canbus2 \
-                -device mioe3680_pci,canbus0=canbus0,canbus1=canbus1 \
+                -device pcm26d2ca_pci,canbus0=canbus0,canbus1=canbus1 \
                 -device kvaser_pci,canbus=canbus2 \
                 -object can-host-socketcan,id=canhost0,if=can0,canbus=canbus0,if=vcan0 \
                 -object can-host-socketcan,id=canhost1,if=can1,canbus=canbus1,if=vcan1 \
@@ -82,3 +89,4 @@ services:
                 -smp 2 \
                 -enable-kvm &&
              tail -f /dev/null"
+    runtime: nvidia

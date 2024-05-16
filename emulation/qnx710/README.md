@@ -18,7 +18,7 @@ server access control command:
 
     xhost +
 
-Now we can startup the emulation using Docker-Compose:
+Now we can startup the emulation using docker-compose (or podman-compose):
 
     cd workspace/emulation/qnx710
     docker-compose up -d
@@ -30,5 +30,5 @@ You can also login to the QNXTEST VM using ssh:
     ssh -p6022 <user>@localhost
 
 The credentials are not intended to be secure. The available _user_ credentials
-are root, qnxuser, user1, user2, ..., user6 and the passwords are the same as the
-associated user name.
+are root, qnxuser, user1, user2, ..., user6 and the passwords are the same as
+the associated user name.
