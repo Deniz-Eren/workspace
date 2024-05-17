@@ -1,12 +1,18 @@
 # QEmu Build
 
 Before you can start the emulation, you must make sure you have built the
-QNXTEST QNX image; see section [Test Platform](../qnx710/image/). The emulator VM boots
-that image up.
+QNXTEST QNX image; see section [Test Platform](../qnx710/image/). The emulator
+VM boots that image up.
 
 This section walks you through how to run the PCI MSI capability CAN-bus device
 version of QEmu. This contribution has not yet been merged to the main QEmu
 repository, so it needs to be built.
+
+To start the QEmu VM with CAN-bus hardware emulation, first ensure the needed
+host Linux modules and virtual socket-CAN ports are running and available:
+
+    cd workspace/emulation/qemu-build
+    sudo ./setuphost.sh
 
 To build PCI MSI capability CAN-bus device version of QEmu:
 

@@ -50,22 +50,7 @@ services:
       - NO_AT_BRIDGE=1
     command: >
       sh -c "echo starting qemu build environment... \
-             && if [ ! -d /sys/class/net/vcan0 ]; then \
-                 echo \"Setting up VCAN0...\" &&
-                 ip link add dev vcan0 type vcan &&
-                 ip link set up vcan0; \
-             else echo \"VCAN0 already setup\"; fi &&
-             if [ ! -d /sys/class/net/vcan1 ]; then \
-                 echo \"Setting up VCAN1...\" &&
-                 ip link add dev vcan1 type vcan &&
-                 ip link set up vcan1; \
-             else echo \"VCAN1 already setup\"; fi &&
-             if [ ! -d /sys/class/net/vcan2 ]; then \
-                 echo \"Setting up VCAN2...\" &&
-                 ip link add dev vcan2 type vcan &&
-                 ip link set up vcan2; \
-             else echo \"VCAN2 already setup\"; fi &&
-             cd /root/qemu &&
+             && cd /root/qemu &&
              ./configure &&
              cd build &&
              ninja &&
