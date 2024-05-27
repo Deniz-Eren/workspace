@@ -97,6 +97,17 @@ sshpass -p 'root' scp \\
 PROGRAM_ARGS=\$@
 
 END
+
+cat << END >> $SCRIPT_OUTPUT_PATH
+sshpass -p 'root' ssh \\
+        -o 'StrictHostKeyChecking=no' \\
+        -o 'UserKnownHostsFile=/dev/null' \\
+        -o 'LogLevel=ERROR' \\
+        -p$SSH_PORT root@localhost \\
+        "slay -s SIGINT $FILENAME"
+
+END
+
 if [ -z "$ENV_VARS_FILE" ]
 then
 cat << END >> $SCRIPT_OUTPUT_PATH
@@ -117,6 +128,7 @@ sshpass -p 'root' ssh \\
         ". $DIRNAME/$ENV_FILENAME ; $FILE_DST_PATH \$PROGRAM_ARGS"
 END
 fi
+
 cat << END >> $SCRIPT_OUTPUT_PATH
 
 EXITCODE=\$?
