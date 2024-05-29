@@ -126,6 +126,8 @@ lib/libsecpol.so.1.sym
 lib/libpci.so
 lib/libpci.so.2.3
 lib/libpci.so.2.3.sym
+lib/libpci.so.3.0
+lib/libpci.so.3.0.sym
 lib/libjson.so.1
 lib/libjson.so.1.sym
 
@@ -188,14 +190,14 @@ lib/dll/pci/pci_slog2.so
 lib/dll/pci/pci_slog2.so.3.0
 lib/dll/pci/pci_slog2.so.3.0.sym
 lib/dll/pci/pci_cap-0x05.so=lib/dll/pci/pci_cap-0x05.so
-lib/dll/pci/pci_cap-0x05.so.2.3=lib/dll/pci/pci_cap-0x05.so.3.0
-lib/dll/pci/pci_cap-0x05.so.2.3.sym=lib/dll/pci/pci_cap-0x05.so.3.0.sym
+lib/dll/pci/pci_cap-0x05.so.3.0=lib/dll/pci/pci_cap-0x05.so.3.0
+lib/dll/pci/pci_cap-0x05.so.3.0.sym=lib/dll/pci/pci_cap-0x05.so.3.0.sym
 lib/dll/pci/pci_cap-0x10.so=lib/dll/pci/pci_cap-0x10.so
-lib/dll/pci/pci_cap-0x10.so.2.3=lib/dll/pci/pci_cap-0x10.so.3.0
-lib/dll/pci/pci_cap-0x10.so.2.3.sym=lib/dll/pci/pci_cap-0x10.so.3.0.sym
+lib/dll/pci/pci_cap-0x10.so.3.0=lib/dll/pci/pci_cap-0x10.so.3.0
+lib/dll/pci/pci_cap-0x10.so.3.0.sym=lib/dll/pci/pci_cap-0x10.so.3.0.sym
 lib/dll/pci/pci_cap-0x11.so=lib/dll/pci/pci_cap-0x11.so
-lib/dll/pci/pci_cap-0x11.so.2.2=lib/dll/pci/pci_cap-0x11.so.3.0
-lib/dll/pci/pci_cap-0x11.so.2.2.sym=lib/dll/pci/pci_cap-0x11.so.3.0.sym
+lib/dll/pci/pci_cap-0x11.so.3.0=lib/dll/pci/pci_cap-0x11.so.3.0
+lib/dll/pci/pci_cap-0x11.so.3.0.sym=lib/dll/pci/pci_cap-0x11.so.3.0.sym
 lib/dll/pci/pci_strings.so
 lib/dll/pci/pci_strings.so.3.0
 lib/dll/pci/pci_strings.so.3.0.sym
