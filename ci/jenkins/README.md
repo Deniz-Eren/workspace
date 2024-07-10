@@ -44,7 +44,7 @@ will require in the following steps.
 
 Now start up the Jenkins containers using Docker Compose:
 
-    docker-compose up -d
+    docker compose up -d
 
 Open your browser on your local host to _http://localhost:8080_.
 

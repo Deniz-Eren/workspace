@@ -41,7 +41,7 @@ Install needed packages:
 
 Install Docker and Docker-compose:
 
-    sudo apt install docker-compose
+    sudo apt install docker-compose-v2
 
 To run Docker without sudo:
 
