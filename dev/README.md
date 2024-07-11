@@ -175,6 +175,11 @@ Login to your remote repository and push your image:
     docker login -u <username>
     docker push <username>/workspace:1.0.0
 
+Alternatively you can push from podman:
+
+    podman login -u <username> docker.io
+    podman push <username>/workspace:1.0.0
+
 Be sure to clean up all the temporary tags and images created above during this
 process for both your Docker and Podman local image repository.
 
