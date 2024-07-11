@@ -19,7 +19,7 @@ To build PCI MSI capability CAN-bus device version of QEmu:
     git clone -b feature/can-sja100-pci-msi-support git@github.com:Deniz-Eren/qemu.git
 
     xhost +
-    podman-compose up -d
+    podman compose up -d
 
 Wait till QEmu is built and run; QEmu window will pop-up when ready.
 

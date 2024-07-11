@@ -33,6 +33,7 @@ services:
     cap_add:
       - NET_ADMIN
     devices:
+      - "/dev/dri:/dev/dri"
       - "/dev/kvm:/dev/kvm"
     volumes:
       - ~/.ssh:/root/.ssh
@@ -40,45 +41,36 @@ services:
       - ~/.Xauthority:/root/.Xauthority
       - /etc/localtime:/etc/localtime:ro
       - ./image/output:/root/Images
+      - ../scripts:/root/scripts
     environment:
       - LANG=en_US.UTF-8
       - LC_ALL=en_US.utf8
       - DISPLAY=${DISPLAY}
       - NO_AT_BRIDGE=1
-    command: >
-      sh -c "echo &&
-             if [ ! -d /sys/class/net/vcan0 ]; then \
-                 echo \"Setting up VCAN0...\" &&
-                 ip link add dev vcan0 type vcan &&
-                 ip link set up vcan0; \
-             else echo \"VCAN0 already setup\"; fi &&
-             if [ ! -d /sys/class/net/vcan1 ]; then \
-                 echo \"Setting up VCAN1...\" &&
-                 ip link add dev vcan1 type vcan &&
-                 ip link set up vcan1; \
-             else echo \"VCAN1 already setup\"; fi &&
-             if [ ! -d /sys/class/net/vcan2 ]; then \
-                 echo \"Setting up VCAN2...\" &&
-                 ip link add dev vcan2 type vcan &&
-                 ip link set up vcan2; \
-             else echo \"VCAN2 already setup\"; fi &&
-             qemu-system-x86_64 --version &&
-             qemu-system-x86_64 \
-                -k en-us \
-                -drive id=disk,file=/root/Images/disk-raw,format=raw,if=none \
-                -device ahci,id=ahci \
-                -device ide-hd,drive=disk,bus=ahci.1 \
-                -boot d \
-                -object can-bus,id=canbus0 \
-                -object can-bus,id=canbus1 \
-                -object can-bus,id=canbus2 \
-                -device mioe3680_pci,canbus0=canbus0,canbus1=canbus1 \
-                -device kvaser_pci,canbus=canbus2 \
-                -object can-host-socketcan,id=canhost0,if=can0,canbus=canbus0,if=vcan0 \
-                -object can-host-socketcan,id=canhost1,if=can1,canbus=canbus1,if=vcan1 \
-                -object can-host-socketcan,id=canhost2,if=can2,canbus=canbus2,if=vcan2 \
-                -m size=4096 \
-                -nic user,hostfwd=tcp::6022-:22,hostfwd=tcp::8000-:8000 \
-                -smp 2 \
-                -enable-kvm &&
-             tail -f /dev/null"
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo starting qemu environment...
+        ./root/scripts/setupvcan.sh
+        qemu-system-x86_64 --version
+        qemu-system-x86_64 \
+            -k en-us \
+            -drive id=disk,file=/root/Images/disk-raw,format=raw,if=none \
+            -device ahci,id=ahci \
+            -device ide-hd,drive=disk,bus=ahci.1 \
+            -boot d \
+            -object can-bus,id=canbus0 \
+            -object can-bus,id=canbus1 \
+            -object can-bus,id=canbus2 \
+            -device mioe3680_pci,canbus0=canbus0,canbus1=canbus1 \
+            -device kvaser_pci,canbus=canbus2 \
+            -object can-host-socketcan,id=canhost0,if=can0,canbus=canbus0,if=vcan0 \
+            -object can-host-socketcan,id=canhost1,if=can1,canbus=canbus1,if=vcan1 \
+            -object can-host-socketcan,id=canhost2,if=can2,canbus=canbus2,if=vcan2 \
+            -m size=4096 \
+            -nic user,hostfwd=tcp::6022-:22,hostfwd=tcp::8000-:8000 \
+            -smp 2 \
+            -enable-kvm
+        tail -f /dev/null
+    runtime: nvidia

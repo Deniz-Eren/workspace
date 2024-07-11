@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# \file     setuphost.sh
+# \file     setupvcan.sh
 # \brief    Bash script that prepares the host Linux system with needed
 #           functionality before running Docker-compose.
 #
@@ -20,6 +20,23 @@
 # this program. If not, see <https://www.gnu.org/licenses/>.
 #
 
-modprobe vcan kvm
+if [ ! -d /sys/class/net/vcan0 ]; then
+    echo "Setting up VCAN0..."
+    ip link add dev vcan0 type vcan
+    ip link set up vcan0
+else echo "VCAN0 already setup"
+fi
 
-../scripts/setupvcan.sh
+if [ ! -d /sys/class/net/vcan1 ]; then
+    echo "Setting up VCAN1..."
+    ip link add dev vcan1 type vcan
+    ip link set up vcan1;
+else echo "VCAN1 already setup"
+fi
+
+if [ ! -d /sys/class/net/vcan2 ]; then
+    echo "Setting up VCAN2..."
+    ip link add dev vcan2 type vcan
+    ip link set up vcan2;
+else echo "VCAN2 already setup"
+fi

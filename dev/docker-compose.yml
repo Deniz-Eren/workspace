@@ -44,8 +44,11 @@ services:
       - LC_ALL=en_US.utf8
       - DISPLAY=${DISPLAY}
       - NO_AT_BRIDGE=1
-    command: >
-      sh -c "echo starting workspace environment... \
-        && /root/workspace/dev/.setup-profile.sh \
-        && tail -f /dev/null"
+    command:
+      - /bin/bash
+      - -c
+      - |
+        echo starting workspace environment...
+        /root/workspace/dev/.setup-profile.sh
+        tail -f /dev/null
     runtime: nvidia

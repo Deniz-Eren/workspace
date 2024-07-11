@@ -15,7 +15,7 @@ Once the setup steps have been fully completed, the normal individual developer
 use-case is to start the container:
 
     cd <repository-home-path>/workspace/dev
-    podman-compose up -d
+    podman compose up -d
 
 Login to the container terminal:
 
@@ -47,12 +47,9 @@ To run Docker without sudo:
 
     sudo usermod -aG docker $USER
 
-Install Podman and
-[Podman-compose](https://github.com/containers/podman-compose) (version 1.0.4 or
-greater is required):
+Install Podman:
 
-    sudo apt install podman python3 python3-pip
-    pip3 install podman-compose
+    sudo apt install podman
 
 Next Install Docker GPU Support. Installation of
 [Docker NVIDIA](https://nvidia.github.io/nvidia-container-runtime/) is as
@@ -115,7 +112,7 @@ _ubuntu-qnx710/setup-profile.sh_ respectively.
 Start the development environment with default Ubuntu base image:
 
     cd <repository-home-path>/workspace/dev
-    podman-compose up -d
+    podman compose up -d
 
 ### Step 3
 
@@ -130,12 +127,12 @@ the following Steps 4, 5, 6 and 7.
 ### Step 4 (Optional)
 
 Once your personal/private licensed software are installed and ready, stop the
-_podman-compose_ container instance:
+_podman compose_ container instance:
 
     cd <repository-home-path>/workspace/dev
-    podman-compose stop
+    podman compose stop
 
-IMPORTANT! Be sure NOT to use _down_ with podman-compose, just use _stop_ as
+IMPORTANT! Be sure NOT to use _down_ with podman compose, just use _stop_ as
 shown above. Using _down_ will delete the created container named _workspace_.
 
 Next commit the container _workspace_ to your local Podman image registry:

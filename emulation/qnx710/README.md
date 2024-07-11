@@ -18,10 +18,10 @@ server access control command:
 
     xhost +
 
-Now we can startup the emulation using podman-compose:
+Now we can startup the emulation using podman compose:
 
     cd workspace/emulation/qnx710
-    podman-compose up -d
+    podman compose up -d
 
 QEmu window should appear.
 
