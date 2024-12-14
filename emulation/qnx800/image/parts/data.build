@@ -3,7 +3,7 @@
 # \brief    Buildfile describing the Data partition (mounted at /data) used for
 #           building the QNX OS test image.
 #
-# Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
+# Copyright (C) 2025 Deniz Eren (deniz.eren@outlook.com)
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -21,11 +21,13 @@
 
 [num_inodes=*3000]
 [num_sectors=*983040]
-[search=/x86_64:/x86_64/boot/sys::/opt/qnx710/target/qnx7/x86_64:/opt/qnx710/target/qnx7/x86_64/boot/sys:/opt/qnx710/target/qnx7]
-[uid=0 gid=0 perms=644 dperms=755]
+[search=/root/qnx800/target/qnx/x86_64:/root/qnx800/target/qnx/x86_64/boot/sys:/root/qnx800/target/qnx:.]
+[uid=0 gid=0 dperms=755 perms=644]
 
 [prefix=]
 
+[+dupignore]
+[+optional]
 
 #############################################
 ### Directories
@@ -43,39 +45,25 @@
 [uid=0 gid=0 dperms=755 type=dir] var/spool/cron/crontabs
 [uid=22 gid=22 type=dir dperms=700] var/random
 [uid=30 gid=30 type=dir dperms=700] var/dumper
-[uid=32 gid=32 type=dir dperms=700] var/pps
 [uid=0 gid=0 dperms=a=rwxt type=dir] var/tmp
 [uid=0 gid=0] var/tmp/keep_files = {
 Delete to have /tmp cleaned on boot
 }
-[uid=38 gid=38 type=dir dperms=755] var/dhclient
-[type=link] var/etc/resolv.conf=/data/var/dhclient/resolv.conf
-# Some utilities require /etc/resolv.conf so create one for them
-[perms=555] var/etc/dhclient-exit-hooks {
-#!/bin/sh
-
-cp /dev/null /data/var/dhclient/resolv.conf.new
-chmod 644 /data/var/dhclient/resolv.conf.new
-if [ `getconf _CS_DOMAIN` != undefined ]; then
-   echo search `getconf _CS_DOMAIN` >>/data/var/dhclient/resolv.conf.new
-fi
-if [ `getconf _CS_RESOLVE` != undefined ]; then
-   getconf _CS_RESOLVE | sed 's/nameserver_/nameserver /' >>/data/var/dhclient/resolv.conf.new
-fi
-mv /data/var/dhclient/resolv.conf.new /data/var/dhclient/resolv.conf
-}
+[uid=38 gid=38 type=dir dperms=755] var/dhcpcd
+[uid=38 gid=38 type=dir dperms=755] var/run/dhcpcd
+[type=link] var/db=dhcpcd
+[type=link] var/etc/resolv.conf /data/var/dhcpcd/resolv.conf
 
 [uid=0 gid=0 perms=755] var/etc/rc.d/rc.net = {
 #!/bin/sh
 
-if_up -p wm0
-ifconfig wm0 up
-sysctl -w net.inet.icmp.bmcastecho=1
-sysctl -w qnx.kern.droproot=0x1
+if_up -p -r 20 vtnet0
+ifconfig vtnet0 up
+sysctl -w net.inet.icmp.bmcastecho=1 > /dev/null
+sysctl -w qnx.sec.droproot=33:33 > /dev/null
 
 # Set static IP here if needed (not needed for QEMU testing)
 }
-
 
 #############################################
 ### Users
@@ -95,9 +83,9 @@ root:@S@qibsjcQQzqShWV3KD6MwOS/zFDindxWxKWNzo+SmF9NaAqXoNz+VSZPSfqvt06CmsSErqfCx
 
 [gid=0 uid=0 perms=644] var/etc/group = {
 root::0:root
+sshd::6:sshd
 nobody::3000:
 }
-
 
 #############################################
 ### sshd
@@ -108,8 +96,8 @@ nobody::3000:
 
 # Restrict permissions in home directories
 [uid=0 gid=0 perms=600 dperms=700]
-[type=dir] home/root
-[type=dir] home/root/.ssh
+[type=dir acl=u:0:x] home/root
+[type=dir acl=u:0:x] home/root/.ssh
 home/root/.ssh/environment = {
 TERM=qansi
 PATH=/opt/bin:/proc/boot:/system/xbin
@@ -127,8 +115,7 @@ alias l='ls'
 }
 
 # Revert to more open default permissions
-[uid=0 gid=0 perms=644 dperms=755]
-
+[uid=0 gid=0 dperms=755 perms=644]
 
 #############################################
 ### Customization

@@ -7,7 +7,7 @@ that image up.
 To start the QEmu VM with CAN-bus hardware emulation, first ensure the needed
 host Linux modules are running:
 
-    cd workspace/emulation/qnx710
+    cd workspace/emulation/qnx800
     sudo ../scripts/setuphost.sh
 
 This will startup some Linux modules; one of which is KVM. For KVM to work you
@@ -20,7 +20,7 @@ server access control command:
 
 Now we can startup the emulation using podman compose:
 
-    cd workspace/emulation/qnx710
+    cd workspace/emulation/qnx800
     podman compose up -d
 
 QEmu window should appear.
