@@ -8,7 +8,7 @@ To start the QEmu VM with CAN-bus hardware emulation, first ensure the needed
 host Linux modules are running:
 
     cd workspace/emulation/qnx710
-    sudo ./setuphost.sh
+    sudo ../scripts/setuphost.sh
 
 This will startup some Linux modules; one of which is KVM. For KVM to work you
 must have hardware virtualisation settings enabled in you BIOS.

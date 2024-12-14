@@ -12,7 +12,7 @@ To start the QEmu VM with CAN-bus hardware emulation, first ensure the needed
 host Linux modules and virtual socket-CAN ports are running and available:
 
     cd workspace/emulation/qemu-build
-    sudo ./setuphost.sh
+    sudo ../scripts/setuphost.sh
 
 To build PCI MSI capability CAN-bus device version of QEmu:
 
