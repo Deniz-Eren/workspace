@@ -19,7 +19,9 @@
 # this program. If not, see <https://www.gnu.org/licenses/>.
 #
 
-. ~/workspace/dev/ubuntu-qnx710/packages/builder-args.sh "$@"
+DIR="$(realpath $(dirname "$0"))"
+
+. $DIR/builder-args.sh "$@"
 
 if [ $? -ne 0 ]
 then
