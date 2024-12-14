@@ -98,6 +98,8 @@ lib/libiperf.so.0=usr/lib/libiperf.so.0
 [dperms=755 type=dir] etc/terminfo
 [dperms=755 type=dir] etc/terminfo/q
 [perms=444] etc/terminfo/q/qansi = usr/share/terminfo/q/qansi
+lib/libgtest.so.1.11.0=usr/lib/libgtest.so.1.11.0
+lib/libgtest_main.so.1.11.0=usr/lib/libgtest_main.so.1.11.0
 
 #############################################
 ### Utilities
