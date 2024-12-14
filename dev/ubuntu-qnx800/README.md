@@ -1,8 +1,8 @@
-# QNX 7.1 Development Environment
+# QNX 8.0 Development Environment
 
 ## Installation
 
-This section describes how to install the QNX 7.1 Development Environment as
+This section describes how to install the QNX 8.0 Development Environment as
 needed by Step 3 of setting up _workspace_ Development container.
 
 Login to the _workspace_ development environment container and install your
@@ -13,14 +13,14 @@ personal/private licensed _QNX Software Center_ program:
 
 We have tested this process with:
 
-    QNX Software Center 2.0 Build 202209011607 - Linux Hosts
+    QNX Software Center 2.0.3 Build 202408131717 - Linux Hosts
 
-After downloading the installer file _qnx-setup-2.0-202209011607-linux.run_ from
-your host machine, it will appear in your container in the following path (since
-the _userhome_ mount in the development container is your home directory. To run
-the installer simply:
+After downloading the installer file _qnx-setup-2.0.3-202408131717-linux.run_
+from your host machine, it will appear in your container in the following path
+(since the _userhome_ mount in the development container is your home directory.
+To run the installer simply:
 
-    ./userhome/Downloads/qnx-setup-2.0-202209011607-linux.run
+    ./userhome/Downloads/qnx-setup-2.0.3-202408131717-linux.run
 
 It will start as normal, but keep in mind this is installing inside the
 development container:
@@ -34,10 +34,10 @@ Accept all default installation paths:
     Specify installation path (default: /root/qnx):
 
 Once started, the pop with _Log in to myQNX <@qnx-dev>_ will appear. Here login
-and install your QNX 7.1 system & Momentics.
+and install your QNX 8.0 system & Momentics.
 
-When prompted allow the QNX 7.1 system to install to the default location of
-_/root/qnx710_ within the development container. The
+When prompted allow the QNX 8.0 system to install to the default location of
+_/root/qnx800_ within the development container. The
 [setup profile script](setup-profile.sh) assumes this path.
 
 Additionally install Google Unit Test using QNX Software Center.
