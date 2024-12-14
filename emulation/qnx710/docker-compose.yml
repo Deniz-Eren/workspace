@@ -52,9 +52,10 @@ services:
       - -c
       - |
         echo starting qemu environment...
-        ./root/scripts/setupvcan.sh
+        /root/scripts/setupvcan.sh
         qemu-system-x86_64 --version
         qemu-system-x86_64 \
+            -cpu host \
             -k en-us \
             -drive id=disk,file=/root/Images/disk-raw,format=raw,if=none \
             -device ahci,id=ahci \

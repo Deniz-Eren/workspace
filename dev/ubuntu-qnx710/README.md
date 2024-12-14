@@ -40,6 +40,8 @@ When prompted allow the QNX 7.1 system to install to the default location of
 _/root/qnx710_ within the development container. The
 [setup profile script](setup-profile.sh) assumes this path.
 
+Additionally install Google Unit Test using QNX Software Center.
+
 ## Developing in Momentics
 
 From within Momentics you can connect to the target QEmu hardware emulation

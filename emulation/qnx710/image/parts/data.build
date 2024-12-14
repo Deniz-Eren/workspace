@@ -86,25 +86,11 @@ sysctl -w qnx.kern.droproot=0x1
 [gid=0 uid=0 perms=644] var/etc/passwd = {
 root:x:0:0:Superuser:/data/home/root:/bin/sh
 sshd:x:15:6:sshd:/data/var/chroot/sshd:/bin/false
-qnxuser:x:1000:1000:User9:/data/home/qnxuser:/bin/sh
-user1:x:101:1:User1:/data/home/user1:/bin/sh
-user2:x:102:2:User2:/data/home/user2:/bin/sh
-user3:x:103:3:User3:/data/home/user3:/bin/sh
-user4:x:104:4:User4:/data/home/user4:/bin/sh
-user5:x:105:5:User5:/data/home/user5:/bin/sh
-user6:x:106:6:User6:/data/home/user6:/bin/sh
 }
 
 # Passwords all match user name.  This isn't intended to be secure.
 [gid=0 uid=0 perms=600] var/etc/shadow = {
 root:@S@qibsjcQQzqShWV3KD6MwOS/zFDindxWxKWNzo+SmF9NaAqXoNz+VSZPSfqvt06CmsSErqfCx7Owe8TcZAPgpMw==@YWU5MDNjNzkwYzg3Yzk1NmRiZTBkMTI1OTU4NWI5MzE=:1475759054:0:0
-qnxuser:@S@f0J4xZibUbKllVqPMzetauCHLRi+9C8wTsxYXE5r7Pfhda5FI7zkObEmKogy01pAX5f/1niG2S2eLXbLs3xoww==@YjBmOTQwNzZiNzYwMzY3N2RkMGQ1NTZmNzA5MDFhMWY=:1476890273:0:0
-user1:@S@k3gZNdP64dz99ErW5j85UoKNCjZmZfLZaCOcS9D7vnUdlcCmof3UAxrqBD98VNSfMoN0Jg17QES8Ak6LlGm37Q==@Yjg2YzRhNjIxOTM0ZjE1MDA4NmRlYTc1ZWYwYTg3NjA=:1475758829:0:0
-user2:@S@veI9pIdoaXZlloWV9+m08Vh+pshXj+z6i9FaMowFZdcTaXs9SxehLIm5vDoEj/WI6+BQTCS6FdQxDym8l6VtGA==@OWI0NTJiMmZhOGE4Mzg1MzhjYTk4ZjFlOTEzZDRmNmI=:1475758966:0:0
-user3:@S@n9PdewC99AaCn2OJcyEjfNbM3llYjY2bepbLgB9ZlTwHxHodBgx0l3RVhRgmmBWdMX5TGfM0JhCYtk2muih0ig==@ZjU3MTc2MTk3ZWYyMjE0ZDNkMjFkZDA5MzdhMGRmMzA=:1476890124:0:0
-user4:@S@D2w6pQJNCqDwuNE4yecId7GhjxyteWiu0rVQlLfqlNJJ34hVSd8jSq3w/ER/CEoy5uSk9BPf5fxNNSze15oJbQ==@MjgzNjM2NWIwY2IwOWE1ZGViNDYzNzYxNzFjZmNjMzA=:1476890150:0:0
-user5:@S@XvePjoRI1Vhcan3dcIsthqGVcsMJwnZxPJjFCcZ+9VObIl3c4dJ3+wU77e025FUJWbJkmAz2se2aBmMl2PFAvA==@ZDRhMmFhNTIyYWM5YzMwMTA5MTBmMTFlZjcyNWZmMDc=:1476890180:0:0
-user6:@S@rDpjMHKMdQLmqnpYD4407e102eKzq9zhbqr3UHE6fnX8LF3itO3HpU+zMWQMZ5gLOEomVTdr8aMpb3zh1AqehA==@NDc5MzM2NjM4MzAzN2ExYmM5ZjhlYTIyMDk0NjU1MmM=:1476890199:0:0
 }
 
 [gid=0 uid=0 perms=644] var/etc/group = {
@@ -139,55 +125,6 @@ alias ll='ls -al'
 alias l='ls'
 }
 
-[uid=101 gid=1]
-[type=dir] home/user1
-[type=dir] home/user1/.ssh
-home/user1/.ssh/environment = {
-TERM=qansi
-PATH=/opt/bin:/proc/boot:/system/xbin
-}
-[uid=102 gid=2]
-[type=dir] home/user2
-[type=dir] home/user2/.ssh
-home/user2/.ssh/environment = {
-TERM=qansi
-PATH=/opt/bin:/proc/boot:/system/xbin
-}
-[uid=103 gid=3]
-[type=dir] home/user3
-[type=dir] home/user3/.ssh
-home/user3/.ssh/environment = {
-TERM=qansi
-PATH=/opt/bin:/proc/boot:/system/xbin
-}
-[uid=104 gid=4]
-[type=dir] home/user4
-[type=dir] home/user4/.ssh
-home/user4/.ssh/environment = {
-TERM=qansi
-PATH=/opt/bin:/proc/boot:/system/xbin
-}
-[uid=105 gid=5]
-[type=dir] home/user5
-[type=dir] home/user5/.ssh
-home/user5/.ssh/environment = {
-TERM=qansi
-PATH=/opt/bin:/proc/boot:/system/xbin
-}
-[uid=106 gid=6]
-[type=dir] home/user6
-[type=dir] home/user6/.ssh
-home/user6/.ssh/environment = {
-TERM=qansi
-PATH=/opt/bin:/proc/boot:/system/xbin
-}
-[uid=1000 gid=1000]
-[type=dir] home/qnxuser
-[type=dir] home/qnxuser/.ssh
-home/qnxuser/.ssh/environment = {
-TERM=qansi
-PATH=/opt/bin:/proc/boot:/system/xbin
-}
 
 # Revert to more open default permissions
 [uid=0 gid=0 perms=644 dperms=755]
