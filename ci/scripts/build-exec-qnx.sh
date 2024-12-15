@@ -23,8 +23,9 @@ CMAKE_BUILD_TYPE="Release"      # default build type
 DISABLE_COVERAGE_HTML_GEN="ON"  # default cmake disable coverage html option
 SSH_PORT="6022"                 # default SSH port number
 TOOLCHAIN_FILE="qnx800-x86_64.toolchain.cmake"  # default to QNX 8.0 x86_64
+optq=qnx800
 
-while getopts b:c:e:h:p:r:s:t:T:vw: opt; do
+while getopts b:c:e:h:p:q:r:s:t:T:vw: opt; do
     case ${opt} in
     b )
         BUILD_PATH=$OPTARG
@@ -40,6 +41,9 @@ while getopts b:c:e:h:p:r:s:t:T:vw: opt; do
         ;;
     p )
         SSH_PORT=$OPTARG
+        ;;
+    q )
+        optq=$OPTARG
         ;;
     r )
         REPO=$OPTARG
@@ -64,6 +68,7 @@ while getopts b:c:e:h:p:r:s:t:T:vw: opt; do
         echo "  -b build full path to use"
         echo "  -c program namd or command to run"
         echo "  -p ssh port number"
+        echo "  -q QNX version (default: qnx800)"
         echo "  -r repository location"
         echo "  -s if not empty then copy debug symbols for libc.so"
         echo "  -t build type (default: Release)"
@@ -80,7 +85,7 @@ done
 
 docker exec --user root --workdir /root dev-env bash -c \
     "source .profile \
-    && $REPO/workspace/dev/.setup-profile.sh \
+    && source $REPO/workspace/dev/ubuntu-$optq/setup-profile.sh \
     && if [ ! -z \"$ENV_FILE\" ]; then \
             source $ENV_FILE; fi \
     && mkdir -p $BUILD_PATH \

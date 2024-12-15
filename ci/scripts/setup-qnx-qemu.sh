@@ -56,7 +56,7 @@ docker build \
 
 docker exec --user root --workdir /root dev-env bash -c \
     "source .profile \
-    && /root/workspace/dev/.setup-profile.sh \
+    && /root/workspace/dev/ubuntu-$optq/setup-profile.sh \
     && cd /root/workspace/emulation/$optq/image \
     && ./builddisk.sh"
 
