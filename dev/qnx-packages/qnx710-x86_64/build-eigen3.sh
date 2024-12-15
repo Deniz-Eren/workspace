@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# \file     build-cppzmq.sh
-# \brief    Bash script that builds and installs cppzmq library.
+# \file     build-eigen3.sh
+# \brief    Bash script that builds and installs Eigen3 library.
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
@@ -28,23 +28,23 @@ then
     exit $?
 fi
 
-git clone https://github.com/zeromq/cppzmq.git
-cd cppzmq
-git checkout tags/v$PACKAGE_VERSION -b v$PACKAGE_VERSION-branch
+wget https://gitlab.com/libeigen/eigen/-/archive/$PACKAGE_VERSION/eigen-$PACKAGE_VERSION.tar.gz
+
+tar xf eigen-$PACKAGE_VERSION.tar.gz
+cd eigen-$PACKAGE_VERSION
 
 mkdir build ; cd build
 cmake \
-    -DCMAKE_TOOLCHAIN_FILE=$DIR/../../cmake/Toolchain/qnx710-x86_64.toolchain.cmake \
+    -DCMAKE_TOOLCHAIN_FILE=$DIR/../../../cmake/Toolchain/qnx710-x86_64.toolchain.cmake \
     -DCMAKE_PREFIX_PATH=$PREFIX \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
     -DBUILD_TESTS=OFF \
-    -DCMAKE_CXX_FLAGS="-lsocket" \
     ..
 
 make install
 
 cd ../..
 
-rm -rf cppzmq
+rm -rf eigen-$PACKAGE_VERSION.tar.gz eigen-$PACKAGE_VERSION
