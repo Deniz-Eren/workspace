@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# \file     setup-qnx710-qemu.sh
+# \file     setup-qnx-qemu.sh
 # \brief    Bash script for setup of QNX image run within QEmu container.
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
@@ -20,9 +20,10 @@
 #
 
 # default dev-env Dockerfile is ubuntu-stable
-optd=/opt/workspace/emulation/qnx710/Dockerfile
+optd=/opt/workspace/emulation/qnx800/Dockerfile
+optq=qnx800
 
-while getopts d:i: opt; do
+while getopts d:i:q: opt; do
     case ${opt} in
     d )
         optd=$OPTARG
@@ -30,10 +31,14 @@ while getopts d:i: opt; do
     i )
         opti=$OPTARG
         ;;
+    q )
+        optq=$OPTARG
+        ;;
     \?)
         echo "Usage: $(basename $0) [options]"
         echo "  -d Dockerfile to use for qemu-env container"
         echo "  -i path name of the image file to use"
+        echo "  -q QNX version (default: qnx800)"
         echo ""
         exit
         ;;
@@ -52,10 +57,10 @@ docker build \
 docker exec --user root --workdir /root dev-env bash -c \
     "source .profile \
     && /root/workspace/dev/.setup-profile.sh \
-    && cd /root/workspace/emulation/qnx710/image \
+    && cd /root/workspace/emulation/$optq/image \
     && ./builddisk.sh"
 
 rm -rf $opti
 
-docker cp dev-env:/root/workspace/emulation/qnx710/image/output $opti
+docker cp dev-env:/root/workspace/emulation/$optq/image/output $opti
 

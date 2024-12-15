@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# \file     build-exec-qnx710.sh
+# \file     build-exec-qnx.sh
 # \brief    Bash script for Jenkins integration testing.
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
@@ -22,8 +22,9 @@
 CMAKE_BUILD_TYPE="Release"      # default build type
 DISABLE_COVERAGE_HTML_GEN="ON"  # default cmake disable coverage html option
 SSH_PORT="6022"                 # default SSH port number
+TOOLCHAIN_FILE="qnx800-x86_64.toolchain.cmake"  # default to QNX 8.0 x86_64
 
-while getopts b:c:e:h:p:r:s:t:vw: opt; do
+while getopts b:c:e:h:p:r:s:t:T:vw: opt; do
     case ${opt} in
     b )
         BUILD_PATH=$OPTARG
@@ -49,6 +50,9 @@ while getopts b:c:e:h:p:r:s:t:vw: opt; do
     t )
         CMAKE_BUILD_TYPE=$OPTARG
         ;;
+    T )
+        TOOLCHAIN_FILE=$OPTARG
+        ;;
     v )
         VERBOSE="-vvvvv"
         ;;
@@ -62,7 +66,8 @@ while getopts b:c:e:h:p:r:s:t:vw: opt; do
         echo "  -p ssh port number"
         echo "  -r repository location"
         echo "  -s if not empty then copy debug symbols for libc.so"
-        echo "  -t build type (default: Release)" 
+        echo "  -t build type (default: Release)"
+        echo "  -T CMake toolchain file (default: qnx800-x86_64.toolchain.cmake)"
         echo "  -v for verbose mode"
         echo "  -w file to waitfor after starting the program"
         echo " Environment variable QNX_PREFIX_CMD is placed as prefix to"
@@ -80,7 +85,8 @@ docker exec --user root --workdir /root dev-env bash -c \
             source $ENV_FILE; fi \
     && mkdir -p $BUILD_PATH \
     && cd $BUILD_PATH \
-    && cmake -DSSH_PORT=$SSH_PORT -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE \
+    && cmake -DCMAKE_TOOLCHAIN_FILE=$REPO/workspace/cmake/Toolchain/$TOOLCHAIN_FILE \
+        -DSSH_PORT=$SSH_PORT -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE \
         -DDISABLE_COVERAGE_HTML_GEN=${DISABLE_COVERAGE_HTML_GEN} \
         $REPO \
     && make -j8 \
