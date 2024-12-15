@@ -43,9 +43,9 @@ cmake \
     -DBUILD_EXAMPLES=OFF \
     -DCMAKE_CXX_FLAGS="-lsocket" \
     -DCRYPTO_BACKEND="OpenSSL" \
-    -DOPENSSL_INCLUDE_DIR=~/.local/include/openssl \
-    -DOPENSSL_CRYPTO_LIBRARY=~/.local/lib/libssl.a \
-    -DOPENSSL_SSL_LIBRARY=~/.local/lib/libssl.a \
+    -DOPENSSL_INCLUDE_DIR=$PREFIX/include/openssl \
+    -DOPENSSL_CRYPTO_LIBRARY=$PREFIX/lib/libssl.a \
+    -DOPENSSL_SSL_LIBRARY=$PREFIX/lib/libssl.a \
     ..
 
 make install
