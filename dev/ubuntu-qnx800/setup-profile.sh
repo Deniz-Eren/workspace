@@ -35,3 +35,12 @@ if [ -f /root/qnx800/qnxsdp-env.sh ]; then
 fi
 END
 fi
+
+source /root/qnx800/qnxsdp-env.sh
+
+export QNX_BASE
+export QNX_TARGET
+export QNX_HOST
+export MAKEFLAGS
+export QNX_CONFIGURATION
+export QNX_CONFIGURATION_EXCLUSIVE
