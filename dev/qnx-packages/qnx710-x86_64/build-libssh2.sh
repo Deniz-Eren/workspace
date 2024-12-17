@@ -19,7 +19,9 @@
 # this program. If not, see <https://www.gnu.org/licenses/>.
 #
 
-. ~/workspace/dev/ubuntu-qnx710/packages/builder-args.sh "$@"
+DIR="$(realpath $(dirname "$0"))"
+
+. $DIR/builder-args.sh "$@"
 
 if [ $? -ne 0 ]
 then
@@ -32,7 +34,7 @@ git checkout tags/libssh2-$PACKAGE_VERSION -b libssh2-$PACKAGE_VERSION-branch
 
 mkdir build ; cd build
 cmake \
-    -DCMAKE_TOOLCHAIN_FILE=/root/workspace/cmake/Toolchain/qnx710-x86_64.toolchain.cmake \
+    -DCMAKE_TOOLCHAIN_FILE=$DIR/../../../cmake/Toolchain/qnx710-x86_64.toolchain.cmake \
     -DCMAKE_PREFIX_PATH=$PREFIX \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_BUILD_TYPE=Release \
@@ -41,9 +43,9 @@ cmake \
     -DBUILD_EXAMPLES=OFF \
     -DCMAKE_CXX_FLAGS="-lsocket" \
     -DCRYPTO_BACKEND="OpenSSL" \
-    -DOPENSSL_INCLUDE_DIR=~/.local/include/openssl \
-    -DOPENSSL_CRYPTO_LIBRARY=~/.local/lib/libssl.a \
-    -DOPENSSL_SSL_LIBRARY=~/.local/lib/libssl.a \
+    -DOPENSSL_INCLUDE_DIR=$PREFIX/include/openssl \
+    -DOPENSSL_CRYPTO_LIBRARY=$PREFIX/lib/libssl.a \
+    -DOPENSSL_SSL_LIBRARY=$PREFIX/lib/libssl.a \
     ..
 
 make install

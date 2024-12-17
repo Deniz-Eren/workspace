@@ -1,9 +1,9 @@
 #
 # \file     docker-compose.yml
-# \brief    Docker Compose script that describes the container needed to
-#           run the development environment.
+# \brief    Docker-compose script that describes the containerised test
+#           environments of the QNX OS test setup.
 #
-# Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
+# Copyright (C) 2025 Deniz Eren (deniz.eren@outlook.com)
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -20,12 +20,12 @@
 #
 
 services:
-  term:
-    hostname: emulation-dev
-    container_name: qemu-build
+  qemu:
+    hostname: qemu-test
+    container_name: qemu-test
     build:
       context: .
-      dockerfile: ./qemu/tests/docker/dockerfiles/ubuntu2204.docker
+      dockerfile: Dockerfile
     network_mode: host
     stdin_open: true
     tty: true
@@ -40,9 +40,8 @@ services:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - ~/.Xauthority:/root/.Xauthority
       - /etc/localtime:/etc/localtime:ro
-      - ~:/root/userhome
-      - ./qemu:/root/qemu
-      - ../qnx710/image/output:/root/Images
+      - ./image/output:/root/Images
+      - ../scripts:/root/scripts
     environment:
       - LANG=en_US.UTF-8
       - LC_ALL=en_US.utf8
@@ -52,13 +51,11 @@ services:
       - /bin/bash
       - -c
       - |
-        echo starting qemu build environment...
-        cd /root/qemu
-        ./configure
-        cd build
-        ninja
-        ./qemu-system-x86_64 --version
-        ./qemu-system-x86_64 \
+        echo starting qemu environment...
+        /root/scripts/setupvcan.sh
+        qemu-system-x86_64 --version
+        qemu-system-x86_64 \
+            -cpu host \
             -k en-us \
             -drive id=disk,file=/root/Images/disk-raw,format=raw,if=none \
             -device ahci,id=ahci \
@@ -67,13 +64,13 @@ services:
             -object can-bus,id=canbus0 \
             -object can-bus,id=canbus1 \
             -object can-bus,id=canbus2 \
-            -device pcm26d2ca_pci,canbus0=canbus0,canbus1=canbus1 \
+            -device mioe3680_pci,canbus0=canbus0,canbus1=canbus1 \
             -device kvaser_pci,canbus=canbus2 \
             -object can-host-socketcan,id=canhost0,if=can0,canbus=canbus0,if=vcan0 \
             -object can-host-socketcan,id=canhost1,if=can1,canbus=canbus1,if=vcan1 \
             -object can-host-socketcan,id=canhost2,if=can2,canbus=canbus2,if=vcan2 \
             -m size=4096 \
-            -nic user,hostfwd=tcp::6022-:22,hostfwd=tcp::8000-:8000 \
+            -nic user,model=virtio-net-pci,hostfwd=tcp::6022-:22,hostfwd=tcp::8000-:8000 \
             -smp 2 \
             -enable-kvm
         tail -f /dev/null

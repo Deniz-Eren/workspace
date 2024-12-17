@@ -17,7 +17,7 @@
 # this program. If not, see <https://www.gnu.org/licenses/>.
 #
 
-# the name of the target operating system
+# The name of the target operating system
 set( CMAKE_SYSTEM_NAME qnx710 )
 set( arch armv7le )
 
@@ -26,11 +26,14 @@ set( _CMAKE_TOOLCHAIN_PREFIX    $ENV{QNX_HOST}/usr/bin/ntoarmle-v7- )
 
 # which compilers to use for C and C++
 set( CMAKE_C_COMPILER           $ENV{QNX_HOST}/usr/bin/qcc )
-set( CMAKE_C_COMPILER_TARGET    gcc_nto${arch} )
-set( CMAKE_CXX_COMPILER         $ENV{QNX_HOST}/usr/bin/ntoarmv7-c++ )
-# TODO: investigate why setting q++ doesn't work:
-#set( CMAKE_CXX_COMPILER         $ENV{QNX_HOST}/usr/bin/q++ )
-set( CMAKE_CXX_COMPILER_TARGET  gcc_nto${arch} )
+set( CMAKE_C_COMPILER_TARGET    gcc_nto${arch}_cxx )
+set( CMAKE_CXX_COMPILER         $ENV{QNX_HOST}/usr/bin/q++ )
+set( CMAKE_CXX_COMPILER_TARGET  gcc_nto${arch}_cxx )
+
+# Header search paths must contain the C++ Standard Library headers before any
+# C Standard Library.
+include_directories( SYSTEM $ENV{QNX_TARGET}/usr/include/c++/v1/ )
+include_directories( SYSTEM $ENV{QNX_TARGET}/usr/include/ )
 
 # Set some known tools
 set( CMAKE_NM       $ENV{QNX_HOST}/usr/bin/ntoarmle-v7-nm )

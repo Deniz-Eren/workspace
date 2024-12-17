@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# \file     build-libzmq.sh
-# \brief    Bash script that builds and installs libzmq library.
+# \file     build-openssl.sh
+# \brief    Bash script that builds and installs openssl library.
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
@@ -19,30 +19,35 @@
 # this program. If not, see <https://www.gnu.org/licenses/>.
 #
 
-. ~/workspace/dev/ubuntu-qnx710/packages/builder-args.sh "$@"
+DIR="$(realpath $(dirname "$0"))"
+
+. $DIR/builder-args.sh "$@"
 
 if [ $? -ne 0 ]
 then
     exit $?
 fi
 
-git clone https://github.com/zeromq/libzmq.git
-cd libzmq
-git checkout tags/v$PACKAGE_VERSION -b v$PACKAGE_VERSION-branch
+git clone https://github.com/openssl/openssl.git
+cd openssl
+git checkout tags/openssl-$PACKAGE_VERSION -b openssl-$PACKAGE_VERSION-branch
 
-mkdir build ; cd build
-cmake \
-    -DCMAKE_TOOLCHAIN_FILE=/root/workspace/cmake/Toolchain/qnx710-x86_64.toolchain.cmake \
-    -DCMAKE_PREFIX_PATH=$PREFIX \
-    -DCMAKE_INSTALL_PREFIX=$PREFIX \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
-    -DBUILD_TESTS=OFF \
-    -DCMAKE_CXX_FLAGS="-lsocket" \
-    ..
+git submodule init
+git submodule update
+
+CC=$QNX_HOST/usr/bin/ntox86_64-gcc \
+CXX=$QNX_HOST/usr/bin/ntox86_64-g++ \
+LD=$QNX_HOST/usr/bin/ntox86_64-ld \
+CFLAGS='-fPIC' \
+CXXFLAGS='-fPIC' \
+LDFLAGS="-L$QNX_HOST/usr/lib \
+       -L$QNX_TARGET/x86_64/lib \
+       -L$QNX_TARGET/x86_64/lib/gcc/8.3.0 \
+       -lc -lsocket" \
+    ./Configure --prefix=$PREFIX no-dgram gcc
 
 make install
 
-cd ../..
+cd ..
 
-rm -rf libzmq
+rm -rf openssl

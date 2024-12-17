@@ -3,7 +3,7 @@
 # \file     setup-profile.sh
 # \brief    Bash script that sources QNX environment variables.
 #
-# Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
+# Copyright (C) 2025 Deniz Eren (deniz.eren@outlook.com)
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -19,12 +19,12 @@
 # this program. If not, see <https://www.gnu.org/licenses/>.
 #
 
-if ! grep -q /root/qnx710/qnxsdp-env.sh /root/.profile; then
+if ! grep -q /root/qnx800/qnxsdp-env.sh /root/.profile; then
 cat << END >> /root/.profile
 
 # Source QNX environment
-if [ -f /root/qnx710/qnxsdp-env.sh ]; then
-    source /root/qnx710/qnxsdp-env.sh
+if [ -f /root/qnx800/qnxsdp-env.sh ]; then
+    source /root/qnx800/qnxsdp-env.sh
 
     export QNX_BASE
     export QNX_TARGET
@@ -36,7 +36,7 @@ fi
 END
 fi
 
-source /root/qnx710/qnxsdp-env.sh
+source /root/qnx800/qnxsdp-env.sh
 
 export QNX_BASE
 export QNX_TARGET

@@ -20,14 +20,18 @@
 #
 
 SSH_PORT="6022"     # default SSH port number
+optq=qnx800
 
-while getopts i:p: opt; do
+while getopts i:p:q: opt; do
     case ${opt} in
     i )
         IMAGE_PATH=$OPTARG
         ;;
     p )
         SSH_PORT=$OPTARG
+        ;;
+    q )
+        optq=$OPTARG
         ;;
     \?)
         echo "Usage: start-emulation.sh [options]"
@@ -53,26 +57,51 @@ docker run -d --name=qemu-env \
 
 docker cp $IMAGE_PATH qemu-env:/root/Images
 
-docker exec -d --user root --workdir /root qemu-env \
-    qemu-system-x86_64 \
-        -k en-us \
-        -drive id=disk,file=/root/Images/$IMAGE_FILENAME,format=raw,if=none \
-        -device ahci,id=ahci \
-        -device ide-hd,drive=disk,bus=ahci.1 \
-        -boot d \
-        -object can-bus,id=c0 \
-        -object can-bus,id=c1 \
-        -object can-bus,id=c2 \
-        -device mioe3680_pci,canbus0=c0,canbus1=c1 \
-        -device kvaser_pci,canbus=c2 \
-        -object can-host-socketcan,id=h0,if=c0,canbus=c0,if=vcan1000 \
-        -object can-host-socketcan,id=h1,if=c1,canbus=c1,if=vcan1001 \
-        -object can-host-socketcan,id=h2,if=c2,canbus=c2,if=vcan1002 \
-        -m size=4096 \
-        -nic user,hostfwd=tcp::$SSH_PORT-:22 \
-        -smp 2 \
-        -enable-kvm \
-        -nographic
+if [[ "$optq" == "qnx800" ]]; then
+    docker exec -d --user root --workdir /root qemu-env \
+        qemu-system-x86_64 \
+            -cpu host \
+            -k en-us \
+            -drive id=disk,file=/root/Images/$IMAGE_FILENAME,format=raw,if=none \
+            -device ahci,id=ahci \
+            -device ide-hd,drive=disk,bus=ahci.1 \
+            -boot d \
+            -object can-bus,id=c0 \
+            -object can-bus,id=c1 \
+            -object can-bus,id=c2 \
+            -device mioe3680_pci,canbus0=c0,canbus1=c1 \
+            -device kvaser_pci,canbus=c2 \
+            -object can-host-socketcan,id=h0,if=c0,canbus=c0,if=vcan1000 \
+            -object can-host-socketcan,id=h1,if=c1,canbus=c1,if=vcan1001 \
+            -object can-host-socketcan,id=h2,if=c2,canbus=c2,if=vcan1002 \
+            -m size=4096 \
+            -nic user,model=virtio-net-pci,hostfwd=tcp::$SSH_PORT-:22 \
+            -smp 2 \
+            -enable-kvm \
+            -nographic
+elif [[ "$optq" == "qnx710" ]]; then
+    docker exec -d --user root --workdir /root qemu-env \
+        qemu-system-x86_64 \
+            -cpu host \
+            -k en-us \
+            -drive id=disk,file=/root/Images/$IMAGE_FILENAME,format=raw,if=none \
+            -device ahci,id=ahci \
+            -device ide-hd,drive=disk,bus=ahci.1 \
+            -boot d \
+            -object can-bus,id=c0 \
+            -object can-bus,id=c1 \
+            -object can-bus,id=c2 \
+            -device mioe3680_pci,canbus0=c0,canbus1=c1 \
+            -device kvaser_pci,canbus=c2 \
+            -object can-host-socketcan,id=h0,if=c0,canbus=c0,if=vcan1000 \
+            -object can-host-socketcan,id=h1,if=c1,canbus=c1,if=vcan1001 \
+            -object can-host-socketcan,id=h2,if=c2,canbus=c2,if=vcan1002 \
+            -m size=4096 \
+            -nic user,hostfwd=tcp::$SSH_PORT-:22 \
+            -smp 2 \
+            -enable-kvm \
+            -nographic
+fi
 
 # Wait until emulator SSH port is ready
 docker exec --user root --workdir /root dev-env \

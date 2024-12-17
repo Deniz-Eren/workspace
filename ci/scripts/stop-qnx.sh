@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# \file     stop-qnx710.sh
+# \file     stop-qnx.sh
 # \brief    Bash script for Jenkins integration testing.
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)

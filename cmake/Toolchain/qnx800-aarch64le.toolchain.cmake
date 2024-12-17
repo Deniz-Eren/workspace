@@ -1,7 +1,7 @@
-# \file     qnx710-aarch64le.toolchain.cmake
-# \brief    CMake QNX 7.1 cross-compile toolchain for aarch64le platform.
+# \file     qnx800-aarch64le.toolchain.cmake
+# \brief    CMake QNX 8.0 cross-compile toolchain for aarch64le platform.
 #
-# Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
+# Copyright (C) 2025 Deniz Eren (deniz.eren@outlook.com)
 #
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
@@ -18,7 +18,7 @@
 #
 
 # The name of the target operating system
-set( CMAKE_SYSTEM_NAME qnx710 )
+set( CMAKE_SYSTEM_NAME qnx800 )
 set( arch aarch64le )
 
 # Set toolchain prefix to find the correct tools

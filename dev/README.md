@@ -103,6 +103,10 @@ Make sure Git ignores the changes you have made to these symbolic links:
 
     git update-index --assume-unchanged .Dockerfile .setup-profile.sh
 
+For QNX 8.0 Development Environment setup ensure you direct these symbolic links
+to point to (or replace them with copied of) _ubuntu-qnx800/Dockerfile_ and
+_ubuntu-qnx800/setup-profile.sh_ respectively.
+
 For QNX 7.1 Development Environment setup ensure you direct these symbolic links
 to point to (or replace them with copied of) _ubuntu-qnx710/Dockerfile_ and
 _ubuntu-qnx710/setup-profile.sh_ respectively.
@@ -119,6 +123,7 @@ Start the development environment with default Ubuntu base image:
 Install your personal/private licensed software inside your _workspace_
 container. See further instructions for specific cases:
 
+- [QNX 8.0 Development Environment](ubuntu-qnx710/README.md).
 - [QNX 7.1 Development Environment](ubuntu-qnx710/README.md).
 
 If you have not installed any software in this step, then you can chose to skip
@@ -203,3 +208,38 @@ Now you will have a disposable container setup where you can perform _down_ and
 _up_ whenever you like to throw away your _workspace_ container and re-create
 it from committed base image; this gives great flexibility.
 
+## QNX Packages
+
+Build scripts can be found in _dev/qnx-packages_ folder for various open-source
+packages.
+
+Build script has been supplied to build and install the
+[Boost](https://www.boost.org/) package.
+
+To install Boost version 1.81.0 for example, simply run:
+
+    ./qnx-packages/qnx710-x86_64/build-boost.sh -v 1.81.0 -p ~/.local
+
+To install Eigen3 version 3.4.0:
+
+    ./qnx-packages/qnx710-x86_64/build-eigen3.sh -v 3.4.0 -p ~/.local
+
+To install Google Protobuf3 version 21.12:
+
+    ./qnx-packages/qnx710-x86_64/build-protobuf3.sh -v 21.12 -p ~/.local
+
+To install libzmq version 4.3.4:
+
+    ./qnx-packages/qnx710-x86_64/build-libzmq.sh -v 4.3.4 -p ~/.local
+
+To install cppzmq version 4.9.0:
+
+    ./qnx-packages/qnx710-x86_64/build-cppzmq.sh -v 4.9.0 -p ~/.local
+
+To install openssl version 3.2.0:
+
+    ./qnx-packages/qnx710-x86_64/build-openssl.sh -v 3.2.0 -p ~/.local
+
+To install libssh2 version 1.11.0:
+
+    ./qnx-packages/qnx710-x86_64/build-libssh2.sh -v 1.11.0 -p ~/.local
