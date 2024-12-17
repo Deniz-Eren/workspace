@@ -153,15 +153,15 @@ function( code_coverage_flags )
             endif()
 
             set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} \
-                -ftest-coverage -fprofile-arcs -O0 -g -nopipe"
+                -ftest-coverage -fprofile-arcs -p -g -O0 -nopipe"
                 PARENT_SCOPE )
 
             set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
-                -ftest-coverage -fprofile-arcs -O0 -g -dumpbase -dumpdir -save-temps"
+                -ftest-coverage -fprofile-arcs -p -g -O0 -dumpbase -dumpdir -save-temps"
                 PARENT_SCOPE )
 
             set( CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} \
-                -ftest-coverage -fprofile-arcs -p"
+                -ftest-coverage -fprofile-arcs -p -nopie"
                 PARENT_SCOPE )
 
         elseif( CMAKE_COMPILER_IS_GNUCXX )
@@ -297,11 +297,11 @@ function( code_profiling_flags )
         elseif( "${CMAKE_C_COMPILER_ID}" MATCHES "(QNX)?QCC|qcc" OR
                 "${CMAKE_CXX_COMPILER_ID}" MATCHES "(QNX)?QCC|qcc" )
 
-            set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -finstrument-functions -O0 -g"
+            set( CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -finstrument-functions"
                 PARENT_SCOPE )
 
             set( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} \
-                -finstrument-functions -O0 -g"
+                -g -O0 -finstrument-functions"
                 PARENT_SCOPE )
 
         elseif( CMAKE_COMPILER_IS_GNUCXX )

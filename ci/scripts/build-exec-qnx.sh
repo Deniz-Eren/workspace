@@ -119,7 +119,7 @@ docker exec --user root --workdir /root dev-env bash -c \
 if [ ! -z "$COPY_DEBUG_SYMS" ]; then
     #
     # Valgrind (perhaps on QNX) has many strange issues. One of them is that the
-    # debug symbols for libc.so.5 is required, which is named libc.so.5.sym. Both
+    # debug symbols for libc.so.# is required, which is named libc.so.#.sym. Both
     # of these libraries must be located in the same location.
     # Unsuccessful testing was done with program option _--extra-debuginfo-path=_
     # with no detectable behaviour change.
@@ -138,7 +138,7 @@ if [ ! -z "$COPY_DEBUG_SYMS" ]; then
     # To work around this we've made copies of these libraries to disk on the
     # location _/opt/lib_:
     # 
-    #     cp /proc/boot/libc.so.5* /opt/lib/
+    #     cp /proc/boot/libc.so.* /opt/lib/
     #
 
     docker exec --user root --workdir /root dev-env bash -c \
@@ -147,7 +147,7 @@ if [ ! -z "$COPY_DEBUG_SYMS" ]; then
             -o 'UserKnownHostsFile=/dev/null' \
             -o 'LogLevel=ERROR' \
             -p$SSH_PORT root@localhost \
-            \"cp /proc/boot/libc.so.5* /opt/lib/\""
+            \"cp /proc/boot/libc.so.* /opt/lib/\""
 fi
 
 if [ ! -z "$COMMAND" ]; then

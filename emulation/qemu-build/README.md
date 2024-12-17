@@ -18,8 +18,10 @@ To build PCI MSI capability CAN-bus device version of QEmu:
 
     git clone -b feature/can-sja100-pci-msi-support git@github.com:Deniz-Eren/qemu.git
 
+For QNX 8.0 run container:
+
     xhost +
-    podman compose up -d
+    podman compose --file ./docker-compose-qnx800.yml up -d
 
 Wait till QEmu is built and run; QEmu window will pop-up when ready.
 

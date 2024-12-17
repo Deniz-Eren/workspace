@@ -187,6 +187,7 @@ sbin/pci-server
 [-autolink]
 
 lib/libc.so.6
+lib/libc.so.6.sym
 usr/lib/ldqnx-64.so.2
 lib/libgcc_s.so.1
 lib/libm.so.3

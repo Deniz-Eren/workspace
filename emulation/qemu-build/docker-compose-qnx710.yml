@@ -59,6 +59,7 @@ services:
         ninja
         ./qemu-system-x86_64 --version
         ./qemu-system-x86_64 \
+            -cpu host \
             -k en-us \
             -drive id=disk,file=/root/Images/disk-raw,format=raw,if=none \
             -device ahci,id=ahci \
