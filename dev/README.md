@@ -123,7 +123,7 @@ Start the development environment with default Ubuntu base image:
 Install your personal/private licensed software inside your _workspace_
 container. See further instructions for specific cases:
 
-- [QNX 8.0 Development Environment](ubuntu-qnx710/README.md).
+- [QNX 8.0 Development Environment](ubuntu-qnx800/README.md).
 - [QNX 7.1 Development Environment](ubuntu-qnx710/README.md).
 
 If you have not installed any software in this step, then you can chose to skip

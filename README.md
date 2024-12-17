@@ -2,7 +2,7 @@
 
 Development Environment, Emulation and Continuous Development toolchain project.
 
-Currently we have tested our setup on Ubuntu 22.04 and QNX version 7.1.
+We support QNX 8.0 and QNX 7.1 hosted within Ubuntu 22.04 container images.
 
 To use this development setup within your project you must ensure you follow the
 instructions specified in [Template Project](template-project/) folder.
