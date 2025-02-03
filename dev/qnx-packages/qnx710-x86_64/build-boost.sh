@@ -28,7 +28,7 @@ then
     exit $?
 fi
 
-wget https://boostorg.jfrog.io/artifactory/main/release/$PACKAGE_VERSION/source/boost_$PACKAGE_VERSION_UNDERSCORE.tar.gz
+wget https://archives.boost.io/release/$PACKAGE_VERSION/source/boost_$PACKAGE_VERSION_UNDERSCORE.tar.gz
 
 tar xf boost_$PACKAGE_VERSION_UNDERSCORE.tar.gz
 cd boost_$PACKAGE_VERSION_UNDERSCORE

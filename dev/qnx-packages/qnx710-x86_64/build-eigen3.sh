@@ -35,7 +35,7 @@ cd eigen-$PACKAGE_VERSION
 
 mkdir build ; cd build
 cmake \
-    -DCMAKE_TOOLCHAIN_FILE=$DIR/../../../cmake/Toolchain/qnx710-x86_64.toolchain.cmake \
+    -DCMAKE_TOOLCHAIN_FILE=$DIR/../../../cmake/Toolchain/qnx710-x86_64-gcc.toolchain.cmake \
     -DCMAKE_PREFIX_PATH=$PREFIX \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_BUILD_TYPE=Release \
