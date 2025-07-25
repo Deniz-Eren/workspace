@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # \file     build-cppzmq.sh
-# \brief    Bash script that builds and installs cppzmq library.
+# \brief    Bash script that builds and installs cppzmq library (for iopkt).
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
@@ -40,7 +40,7 @@ cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
     -DBUILD_TESTS=OFF \
-    -DCMAKE_CXX_FLAGS="-lsocket" \
+    -DCMAKE_CXX_FLAGS="-L$QNX_TARGET/x86_64/lib -lsocket" \
     ..
 
 make install

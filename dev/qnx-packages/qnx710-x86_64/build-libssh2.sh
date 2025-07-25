@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # \file     build-libssh2.sh
-# \brief    Bash script that builds and installs libssh2 library.
+# \brief    Bash script that builds and installs libssh2 library (for iopkt).
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
@@ -41,11 +41,11 @@ cmake \
     -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
     -DBUILD_TESTING=OFF \
     -DBUILD_EXAMPLES=OFF \
-    -DCMAKE_CXX_FLAGS="-lsocket" \
     -DCRYPTO_BACKEND="OpenSSL" \
     -DOPENSSL_INCLUDE_DIR=$PREFIX/include/openssl \
     -DOPENSSL_CRYPTO_LIBRARY=$PREFIX/lib/libssl.a \
     -DOPENSSL_SSL_LIBRARY=$PREFIX/lib/libssl.a \
+    -DCMAKE_C_FLAGS="-L$QNX_TARGET/x86_64/lib" \
     ..
 
 make install

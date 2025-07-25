@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# \file     build-libzmq.sh
-# \brief    Bash script that builds and installs libzmq library (for iopkt).
+# \file     build-cppzmq.sh
+# \brief    Bash script that builds and installs cppzmq library (for iosock).
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
@@ -28,8 +28,8 @@ then
     exit $?
 fi
 
-git clone https://github.com/zeromq/libzmq.git
-cd libzmq
+git clone https://github.com/zeromq/cppzmq.git
+cd cppzmq
 git checkout tags/v$PACKAGE_VERSION -b v$PACKAGE_VERSION-branch
 
 mkdir build ; cd build
@@ -40,11 +40,11 @@ cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
     -DBUILD_TESTS=OFF \
-    -DCMAKE_CXX_FLAGS="-L$QNX_TARGET/x86_64/lib -lsocket" \
+    -DCMAKE_CXX_FLAGS="-L$QNX_TARGET/x86_64/io-sock/lib -lsocket" \
     ..
 
-make VERBOSE=1 install
+make install
 
 cd ../..
 
-rm -rf libzmq
+rm -rf cppzmq

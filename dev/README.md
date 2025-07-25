@@ -220,6 +220,8 @@ To install Boost version 1.81.0 for example, simply run:
 
     ./qnx-packages/qnx710-x86_64/build-boost.sh -v 1.81.0 -p ~/.local
 
+Other packages are included as follows.
+
 To install Eigen3 version 3.4.0:
 
     ./qnx-packages/qnx710-x86_64/build-eigen3.sh -v 3.4.0 -p ~/.local
@@ -228,18 +230,34 @@ To install Google Protobuf3 version 21.12:
 
     ./qnx-packages/qnx710-x86_64/build-protobuf3.sh -v 21.12 -p ~/.local
 
-To install libzmq version 4.3.4:
+To install libzmq version 4.3.4 (for iopkt):
 
     ./qnx-packages/qnx710-x86_64/build-libzmq.sh -v 4.3.4 -p ~/.local
 
-To install cppzmq version 4.9.0:
+To install libzmq version 4.3.4 (for iosock):
+
+    ./qnx-packages/qnx710-x86_64/build-libzmq-iosock.sh -v 4.3.4 -p ~/.local
+
+To install cppzmq version 4.9.0 (for iopkt):
 
     ./qnx-packages/qnx710-x86_64/build-cppzmq.sh -v 4.9.0 -p ~/.local
 
-To install openssl version 3.2.0:
+To install cppzmq version 4.9.0 (for iosock):
+
+    ./qnx-packages/qnx710-x86_64/build-cppzmq-iosock.sh -v 4.9.0 -p ~/.local
+
+To install openssl version 3.2.0 (for iopkt):
 
     ./qnx-packages/qnx710-x86_64/build-openssl.sh -v 3.2.0 -p ~/.local
 
-To install libssh2 version 1.11.0:
+To install openssl version 3.2.0 (for iosock):
+
+    ./qnx-packages/qnx710-x86_64/build-openssl-iosock.sh -v 3.2.0 -p ~/.local
+
+To install libssh2 version 1.11.0 (for iopkt):
 
     ./qnx-packages/qnx710-x86_64/build-libssh2.sh -v 1.11.0 -p ~/.local
+
+To install libssh2 version 1.11.0 (for iosock):
+
+    ./qnx-packages/qnx710-x86_64/build-libssh2-iosock.sh -v 1.11.0 -p ~/.local

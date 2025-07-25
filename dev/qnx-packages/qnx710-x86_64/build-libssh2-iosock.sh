@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# \file     build-libzmq.sh
-# \brief    Bash script that builds and installs libzmq library (for iopkt).
+# \file     build-libssh2.sh
+# \brief    Bash script that builds and installs libssh2 library (for iosock).
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
@@ -28,23 +28,28 @@ then
     exit $?
 fi
 
-git clone https://github.com/zeromq/libzmq.git
-cd libzmq
-git checkout tags/v$PACKAGE_VERSION -b v$PACKAGE_VERSION-branch
+git clone https://github.com/libssh2/libssh2
+cd libssh2
+git checkout tags/libssh2-$PACKAGE_VERSION -b libssh2-$PACKAGE_VERSION-branch
 
 mkdir build ; cd build
 cmake \
-    -DCMAKE_TOOLCHAIN_FILE=$DIR/../../../cmake/Toolchain/qnx710-x86_64-gcc.toolchain.cmake \
+    -DCMAKE_TOOLCHAIN_FILE=$DIR/../../../cmake/Toolchain/qnx710-x86_64.toolchain.cmake \
     -DCMAKE_PREFIX_PATH=$PREFIX \
     -DCMAKE_INSTALL_PREFIX=$PREFIX \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
-    -DBUILD_TESTS=OFF \
-    -DCMAKE_CXX_FLAGS="-L$QNX_TARGET/x86_64/lib -lsocket" \
+    -DBUILD_TESTING=OFF \
+    -DBUILD_EXAMPLES=OFF \
+    -DCRYPTO_BACKEND="OpenSSL" \
+    -DOPENSSL_INCLUDE_DIR=$PREFIX/include/openssl \
+    -DOPENSSL_CRYPTO_LIBRARY=$PREFIX/lib/libssl.a \
+    -DOPENSSL_SSL_LIBRARY=$PREFIX/lib/libssl.a \
+    -DCMAKE_C_FLAGS="-L$QNX_TARGET/x86_64/io-sock/lib" \
     ..
 
-make VERBOSE=1 install
+make install
 
 cd ../..
 
-rm -rf libzmq
+rm -rf libssh2

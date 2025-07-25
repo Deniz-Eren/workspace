@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# \file     build-libzmq.sh
-# \brief    Bash script that builds and installs libzmq library (for iopkt).
+# \file     build-libzmq-iosock.sh
+# \brief    Bash script that builds and installs libzmq library (for iosock).
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
@@ -40,7 +40,7 @@ cmake \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
     -DBUILD_TESTS=OFF \
-    -DCMAKE_CXX_FLAGS="-L$QNX_TARGET/x86_64/lib -lsocket" \
+    -DCMAKE_CXX_FLAGS="-L$QNX_TARGET/x86_64/io-sock/lib -lsocket" \
     ..
 
 make VERBOSE=1 install

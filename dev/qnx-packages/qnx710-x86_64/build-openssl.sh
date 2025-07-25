@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 # \file     build-openssl.sh
-# \brief    Bash script that builds and installs openssl library.
+# \brief    Bash script that builds and installs openssl library (for iopkt).
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #

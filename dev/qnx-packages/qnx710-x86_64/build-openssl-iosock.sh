@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# \file     build-libzmq.sh
-# \brief    Bash script that builds and installs libzmq library (for iopkt).
+# \file     build-openssl-iosock.sh
+# \brief    Bash script that builds and installs openssl library (for iosock).
 #
 # Copyright (C) 2023 Deniz Eren (deniz.eren@outlook.com)
 #
@@ -28,23 +28,27 @@ then
     exit $?
 fi
 
-git clone https://github.com/zeromq/libzmq.git
-cd libzmq
-git checkout tags/v$PACKAGE_VERSION -b v$PACKAGE_VERSION-branch
+git clone https://github.com/openssl/openssl.git
+cd openssl
+git checkout tags/openssl-$PACKAGE_VERSION -b openssl-$PACKAGE_VERSION-branch
 
-mkdir build ; cd build
-cmake \
-    -DCMAKE_TOOLCHAIN_FILE=$DIR/../../../cmake/Toolchain/qnx710-x86_64-gcc.toolchain.cmake \
-    -DCMAKE_PREFIX_PATH=$PREFIX \
-    -DCMAKE_INSTALL_PREFIX=$PREFIX \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
-    -DBUILD_TESTS=OFF \
-    -DCMAKE_CXX_FLAGS="-L$QNX_TARGET/x86_64/lib -lsocket" \
-    ..
+git submodule init
+git submodule update
 
-make VERBOSE=1 install
+CC=$QNX_HOST/usr/bin/ntox86_64-gcc \
+CXX=$QNX_HOST/usr/bin/ntox86_64-g++ \
+LD=$QNX_HOST/usr/bin/ntox86_64-ld \
+CFLAGS='-fPIC' \
+CXXFLAGS='-fPIC' \
+LDFLAGS="-L$QNX_TARGET/x86_64/io-sock/lib \
+       -L$QNX_HOST/usr/lib \
+       -L$QNX_TARGET/x86_64/lib \
+       -L$QNX_TARGET/x86_64/lib/gcc/8.3.0 \
+       -lc -lsocket" \
+    ./Configure --prefix=$PREFIX no-dgram gcc
 
-cd ../..
+make install
 
-rm -rf libzmq
+cd ..
+
+rm -rf openssl
