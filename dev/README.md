@@ -95,6 +95,14 @@ Test to see everything is working with raw docker command:
     docker run --rm --runtime=nvidia --gpus all \
         nvcr.io/nvidia/cuda:12.1.1-devel-ubuntu22.04 nvidia-smi
 
+To use podman compose (with Docker-compatible tooling), start the API socket:
+
+    systemctl --user enable --now podman.socket
+
+Verify:
+
+    systemctl --user status podman.socket
+
 ### Step 1
 
 Modify the symbolic link _dev/.Dockerfile_ to point to the desired _Dockerfile_
