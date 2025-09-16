@@ -51,15 +51,22 @@ Install Podman:
 
     sudo apt install podman
 
-Next Install Docker GPU Support. Installation of
-[Docker NVIDIA](https://nvidia.github.io/nvidia-container-runtime/) is as
-follows:
+Refresh the group memberships:
 
-    curl -s -L https://nvidia.github.io/nvidia-container-runtime/gpgkey | \
-      sudo apt-key add -
-    distribution=$(. /etc/os-release;echo $ID$VERSION_ID)
-    curl -s -L https://nvidia.github.io/nvidia-container-runtime/$distribution/nvidia-container-runtime.list | \
-      sudo tee /etc/apt/sources.list.d/nvidia-container-runtime.list
+    newgrp docker
+    newgrp $USER
+
+Next Install Docker GPU Support. Download the NVIDIA Keyring Package:
+
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
+
+Install the Keyring:
+
+    sudo dpkg -i cuda-keyring_1.1-1_all.deb
+
+Cleanup and update package index:
+
+    rm cuda-keyring_1.1-1_all.deb
     sudo apt-get update
 
 Then install:
