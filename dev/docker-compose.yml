@@ -35,7 +35,6 @@ services:
     volumes:
       - ~/.ssh:/root/.ssh
       - /tmp/.X11-unix:/tmp/.X11-unix
-      - ~/.Xauthority:/root/.Xauthority
       - /etc/localtime:/etc/localtime:ro
       - ~:/root/userhome
       - ..:/root/workspace
