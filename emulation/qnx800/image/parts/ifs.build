@@ -146,8 +146,8 @@ PCI_HW_MODULE=pci_hw-Intel_x86.so
 }
 
 lib/dll/pci/pci_hw-Intel_x86.so
-lib/dll/pci/pci_hw-Intel_x86.so.3.0
-lib/dll/pci/pci_hw-Intel_x86.so.3.0.sym
+lib/dll/pci/pci_hw-Intel_x86.so.3.1
+lib/dll/pci/pci_hw-Intel_x86.so.3.1.sym
 lib/dll/pci/pci_slog2.so
 lib/dll/pci/pci_slog2.so.3.0
 lib/dll/pci/pci_slog2.so.3.0.sym
