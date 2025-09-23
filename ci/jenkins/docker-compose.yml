@@ -23,7 +23,7 @@ services:
   jenkins:
     hostname: jenkins
     container_name: jenkins
-    image: jenkins/jenkins:lts-jdk11
+    image: jenkins/jenkins:lts-jdk21
     network_mode: host
     stdin_open: true
     tty: true
