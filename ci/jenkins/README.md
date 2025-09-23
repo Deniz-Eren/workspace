@@ -100,6 +100,7 @@ On startup choose the option to install recommended plugins.
 
 In addition to those, install plugins:
 
+- _Stage View_
 - _Last Changes_
 - _HTML Publisher_
 - _Valgrind_
