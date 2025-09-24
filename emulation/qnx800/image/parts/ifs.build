@@ -62,6 +62,7 @@
     procmgr_symlink /system/etc/profile /etc/profile
     procmgr_symlink /data/home/root /root
     procmgr_symlink /system/xbin/login /bin/login
+    procmgr_symlink /system/usr/libexec /usr/libexec
 
     TERM=qansi
     HOME=/data/home/root

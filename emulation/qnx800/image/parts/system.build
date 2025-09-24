@@ -345,6 +345,7 @@ Subsystem	sftp	/system/xbin/sftp-server
 xbin/scp=usr/bin/scp
 xbin/sftp-server=usr/libexec/sftp-server
 xbin/ssh=usr/bin/ssh
+usr/libexec/sshd-session=usr/libexec/sshd-session
 
 #############################################
 ## PAM
